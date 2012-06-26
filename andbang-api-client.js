@@ -166,7 +166,8 @@ AndBang.prototype.connect = function (cb) {
             'moveTask',
             'favoriteTask',
             'updateTeam',
-            'deleteTeam'
+            'deleteTeam',
+            'newProject'
         ],
         i = 0,
         l = apiEvents.length;
@@ -238,6 +239,9 @@ AndBang.prototype.updateTask = function (teamIdOrSlug, taskId, attrs, cb) {
 };
 AndBang.prototype.shipTask = function (teamIdOrSlug, taskId, cb) {
     this._callApi('shipTask', arguments);
+};
+AndBang.prototype.createTask = function (teamIdOrSlug, taskAttributes, cb) {
+    this._callApi('createTask', arguments);
 };
 
 
