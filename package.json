@@ -1,0 +1,18 @@
+{
+  "author": "Henrik Joreteg <henrik@andyet.net>",
+  "name": "andbang.js",
+  "description": "Client for andbang api",
+  "version": "0.0.1",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/andyet/andbang.js.git"
+  },
+  "main": "./andbang-api-client.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "optionalDependencies": {},
+  "engines": {
+    "node": "*"
+  }
+}
