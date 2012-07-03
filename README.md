@@ -6,7 +6,7 @@
 
 Just inclide the script in your HTML
 ```html
-<script src="andbang-client-api.js"></script>
+<script src="andbang.js"></script>
 ```
 
 Then write some JS
