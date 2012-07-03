@@ -247,6 +247,9 @@ AndBang.prototype.shipTask = function (teamIdOrSlug, taskId, cb) {
 AndBang.prototype.createTask = function (teamIdOrSlug, taskAttributes, cb) {
     this._callApi('createTask', arguments);
 };
+AndBang.prototype.deleteTask = function (teamIdOrSlug, taskId, cb) {
+    this._callApi('deleteTask', arguments);
+};
 
 
 if (typeof exports !== 'undefined') {
