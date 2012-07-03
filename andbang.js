@@ -10,6 +10,9 @@ var root = this,
         for (var i in obj2) obj1[i] = obj2[i];
     };
 
+// conditionally import socket.io-client or just use global if present
+root.io || (root.io = require('socket.io-client'));
+
 /**
  * Initialize a new `Emitter`.
  * 
@@ -120,6 +123,8 @@ var AndBang = function (config) {
     
     Emitter.call(this);
 
+
+
     if (opts.token && opts.autoConnect) this.connect();
 };
 
@@ -135,7 +140,6 @@ AndBang.prototype.validateToken = function (token, cb) {
             if (user) {
                 // autosubscribe
                 if (self.config.autoSubscribe) self.socket.emit('subscribeTeams');
-                console.log('emitting');
                 self.emit('ready', user);
                 cb(null, true);
             } else {
@@ -173,7 +177,7 @@ AndBang.prototype.connect = function (cb) {
         l = apiEvents.length;
     
     // set up our socket.io connection
-    this.socket = io.connect(this.config.url, {
+    this.socket = root.io.connect(this.config.url, {
         'max reconnection attempts': this.config.reconnectAttempts,
         'transports': this.config.transports
     });
