@@ -1,6 +1,6 @@
 {
   "author": "Henrik Joreteg <henrik@andyet.net>",
-  "name": "andbang.js",
+  "name": "andbang",
   "description": "Client for andbang api",
   "version": "0.0.1",
   "private": true,
@@ -8,8 +8,10 @@
     "type": "git",
     "url": "git://github.com/andyet/andbang.js.git"
   },
-  "main": "./andbang-api-client.js",
-  "dependencies": {},
+  "main": "./andbang.js",
+  "dependencies": {
+    "socket.io-client": ""
+  },
   "devDependencies": {},
   "optionalDependencies": {},
   "engines": {
