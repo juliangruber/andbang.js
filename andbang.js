@@ -214,12 +214,19 @@ AndBang.prototype._callApi = function (method, incomingArgs) {
     var myArray = slice.call(incomingArgs),
         last = myArray[myArray.length - 1],
         cb = isFunc(last) ? last : null,
-        args = cb ? slice.call(myArray, 0, myArray.length - 1) : myArray;
+        args = cb ? slice.call(myArray, 0, myArray.length - 1) : myArray,
+        wrappedCallback = function (err, data, code) {
+            if (typeof data !== 'undefined') {
+                cb(err, data, code);
+            } else {
+                cb(err, data, code);
+            }            
+        };
     
     if (args.length) {
-        this.socket.emit(method, args, cb);
+        this.socket.emit(method, args, wrappedCallback);
     } else {
-        this.socket.emit(method, cb);
+        this.socket.emit(method, wrappedCallback);
     }
 };
 
@@ -237,6 +244,9 @@ AndBang.prototype.getMemberTasks = function (teamIdOrSlug, memberIdOrUsername, c
 };
 AndBang.prototype.getTeams = function (cb) {
     this._callApi('getTeams', arguments);
+};
+AndBang.prototype.getAllTeamData = function (cb) {
+    this._callApi('getAllTeamData', arguments);
 };
 AndBang.prototype.updateTask = function (teamIdOrSlug, taskId, attrs, cb) {
     this._callApi('updateTask', arguments);
