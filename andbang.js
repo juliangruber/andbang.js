@@ -217,7 +217,7 @@ AndBang.prototype._callApi = function (method, incomingArgs) {
         args = cb ? slice.call(myArray, 0, myArray.length - 1) : myArray,
         wrappedCallback = function (err, data, code) {
             if (typeof data !== 'undefined') {
-                cb(err, data, code);
+                cb(err, JSON.parse(data), code);
             } else {
                 cb(err, data, code);
             }            
