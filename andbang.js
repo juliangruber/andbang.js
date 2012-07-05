@@ -214,12 +214,20 @@ AndBang.prototype._callApi = function (method, incomingArgs) {
     var myArray = slice.call(incomingArgs),
         last = myArray[myArray.length - 1],
         cb = isFunc(last) ? last : null,
-        args = cb ? slice.call(myArray, 0, myArray.length - 1) : myArray;
-    
+        args = cb ? slice.call(myArray, 0, myArray.length - 1) : myArray,
+        wrappedCallback = function (err, data, code) {
+            if (!cb) return;
+            if (typeof data === 'string') {
+                cb(err, JSON.parse(data), code); 
+            } else {
+                cb(err, data, code); 
+            }
+        };
+        
     if (args.length) {
-        this.socket.emit(method, args, cb);
+        this.socket.emit(method, args, wrappedCallback);
     } else {
-        this.socket.emit(method, cb);
+        this.socket.emit(method, wrappedCallback);
     }
 };
 
