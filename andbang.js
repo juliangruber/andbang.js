@@ -111,7 +111,7 @@ Emitter.prototype.emit = function(event){
 var AndBang = function (config) {
     var self = this,
         opts = this.config = {
-            url: 'http://localhost:3000',
+            url: 'https://api.andbang.com',
             transports: ['websocket'],
             reconnectAttempts: 20,
             autoConnect: true,
