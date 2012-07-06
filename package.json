@@ -10,9 +10,12 @@
   },
   "main": "./andbang.js",
   "dependencies": {
-    "socket.io-client": ""
+    "socket.io-client": "",
+    "precommit-hook": ""
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "jshint": ""
+  },
   "optionalDependencies": {},
   "engines": {
     "node": "*"
