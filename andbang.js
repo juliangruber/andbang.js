@@ -123,7 +123,22 @@
     // connect function
     AndBang.prototype.connect = function (cb) {
         var self = this,
-            apiEvents,
+            apiEvents = [
+                'addMember',
+                'removeMember',
+                'editMember',
+                'addTask',
+                'deleteTask',
+                'editTask',
+                'shipTask',
+                'assignTask',
+                'unassignTask',
+                'moveTask',
+                'favoriteTask',
+                'updateTeam',
+                'deleteTeam',
+                'newProject'
+            ],
             i = 0,
             l = apiEvents.length;
         
@@ -152,23 +167,6 @@
             if (reason === 'handshake unauthorized') self.emit('connectFail');
             self.emit('error', reason);
         });
-
-        apiEvents = [
-            'addMember',
-            'removeMember',
-            'editMember',
-            'addTask',
-            'deleteTask',
-            'editTask',
-            'shipTask',
-            'assignTask',
-            'unassignTask',
-            'moveTask',
-            'favoriteTask',
-            'updateTeam',
-            'deleteTeam',
-            'newProject'
-        ];
 
         // passthrough of our events so that the API will emit them directly.
         for (; i < l; i++) {
