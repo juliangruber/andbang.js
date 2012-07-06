@@ -213,6 +213,12 @@
     AndBang.prototype.getMemberTasks = function (teamIdOrSlug, memberIdOrUsername, cb) {
         this._callApi('getMemberTasks', arguments);
     };
+    AndBang.prototype.getMemberLateredTasks = function (teamIdOrSlug, memberIdOrUsername, cb) {
+        this._callApi('getMemberLateredTasks', arguments);
+    };
+    AndBang.prototype.getMemberShippedTasks = function (teamIdOrSlug, memberIdOrUsername, cb) {
+        this._callApi('getMemberShippedTasks', arguments);
+    };
     AndBang.prototype.getTeams = function (cb) {
         this._callApi('getTeams', arguments);
     };
