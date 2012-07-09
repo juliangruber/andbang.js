@@ -237,6 +237,9 @@
     AndBang.prototype.deleteTask = function (teamIdOrSlug, taskId, cb) {
         this._callApi('deleteTask', arguments);
     };
+    AndBang.prototype.laterTask = function (teamIdOrSlug, taskId, laterTime, cb) {
+        this._callApi('laterTask', arguments);
+    };
 
     // attach to windor or export with commonJS
     if (typeof exports !== 'undefined') {
