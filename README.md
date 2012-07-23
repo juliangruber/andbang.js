@@ -37,3 +37,12 @@ api.on('ready', function () {
 It uses socket.io under the covers so you get realtime, seemless API access that's as easy as AJAX.
 
 Have fun!
+
+###andbang.template.js
+andbang.js is generated from the provided API specification, spec.json. This
+allows automation allows for rapid expansion of the API across many platforms.
+
+To generate andbang.js, run the provided build script, which depends on spec.json
+and andbang.template.js.
+
+node ./build

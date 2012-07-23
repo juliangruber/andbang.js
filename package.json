@@ -11,7 +11,8 @@
   "main": "./andbang.js",
   "dependencies": {
     "socket.io-client": "",
-    "precommit-hook": ""
+    "precommit-hook": "",
+    "mustache": "git+https://github.com/janl/mustache.js.git"
   },
   "devDependencies": {
     "jshint": ""

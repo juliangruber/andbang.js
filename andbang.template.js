@@ -201,42 +201,12 @@
         }
     };
 
-    AndBang.prototype.updateUser = function (userAttributes, cb) {
-        this._callApi('updateUser', arguments);
+    {{#methods}}
+    AndBang.prototype.{{methodName}} = function ({{params}}) {
+        this._callApi('{{methodName}}', arguments);
     };
 
-    AndBang.prototype.getTeams = function (cb) {
-        this._callApi('getTeams', arguments);
-    };
-
-    AndBang.prototype.getAllTeamData = function (cb) {
-        this._callApi('getAllTeamData', arguments);
-    };
-
-    AndBang.prototype.createTask = function (teamId, taskAttributes, cb) {
-        this._callApi('createTask', arguments);
-    };
-
-    AndBang.prototype.updateTask = function (teamId, taskId, taskAttributes, cb) {
-        this._callApi('updateTask', arguments);
-    };
-
-    AndBang.prototype.assignTask = function (teamId, taskId, memberId, cb) {
-        this._callApi('assignTask', arguments);
-    };
-
-    AndBang.prototype.unassignTask = function (teamId, taskId, cb) {
-        this._callApi('unassignTask', arguments);
-    };
-
-    AndBang.prototype.deleteTask = function (teamId, taskId, cb) {
-        this._callApi('deleteTask', arguments);
-    };
-
-    AndBang.prototype.shipTask = function (teamId, taskId, cb) {
-        this._callApi('shipTask', arguments);
-    };
-
+    {{/methods}}
 
     // attach to windor or export with commonJS
     if (typeof exports !== 'undefined') {
