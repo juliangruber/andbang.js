@@ -7,6 +7,7 @@
     "white": true,
     "undef": true,
     "predef": [
+        "process",
         "socket",
         "require",
         "exports",
