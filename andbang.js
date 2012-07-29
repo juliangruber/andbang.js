@@ -201,42 +201,146 @@
         }
     };
 
+    // Change user properties.
     AndBang.prototype.updateUser = function (userAttributes, cb) {
         this._callApi('updateUser', arguments);
     };
-
+    
+    // Get team attributes of teams that you&#39;re part of.
     AndBang.prototype.getTeams = function (cb) {
         this._callApi('getTeams', arguments);
     };
-
+    
+    // Get team attributes and related data for all teams you&#39;re part of.
     AndBang.prototype.getAllTeamData = function (cb) {
         this._callApi('getAllTeamData', arguments);
     };
-
-    AndBang.prototype.createTask = function (teamId, taskAttributes, cb) {
-        this._callApi('createTask', arguments);
-    };
-
+    
+    // Updates task attributes.
     AndBang.prototype.updateTask = function (teamId, taskId, taskAttributes, cb) {
         this._callApi('updateTask', arguments);
     };
-
-    AndBang.prototype.assignTask = function (teamId, taskId, memberId, cb) {
+    
+    // Assigns a task to another team member.
+    AndBang.prototype.assignTask = function (teamId, taskId, userId, cb) {
         this._callApi('assignTask', arguments);
     };
-
+    
+    // Unassigns a task. This can only be done if the task is already part of a project. Since all tasks must have an assignee or a related project.
     AndBang.prototype.unassignTask = function (teamId, taskId, cb) {
         this._callApi('unassignTask', arguments);
     };
-
+    
+    // Deletes a task completely.
     AndBang.prototype.deleteTask = function (teamId, taskId, cb) {
         this._callApi('deleteTask', arguments);
     };
-
+    
+    // In And Bang we call completing a task &quot;shipping&quot;. This method does that.
     AndBang.prototype.shipTask = function (teamId, taskId, cb) {
         this._callApi('shipTask', arguments);
     };
-
+    
+    // Create a new project.
+    AndBang.prototype.createProject = function (teamId, projectAttributes, cb) {
+        this._callApi('createProject', arguments);
+    };
+    
+    // Update project attributes.
+    AndBang.prototype.updateProject = function (teamId, projectId, projectAttributes, cb) {
+        this._callApi('updateProject', arguments);
+    };
+    
+    // Delete a project. As a safeguard, this can only be done if all the tasks are deleted first.
+    AndBang.prototype.deleteProject = function (teamId, projectId, cb) {
+        this._callApi('deleteProject', arguments);
+    };
+    
+    // List projects.
+    AndBang.prototype.getProjects = function (teamId, cb) {
+        this._callApi('getProjects', arguments);
+    };
+    
+    // Get all the tasks in a given project
+    AndBang.prototype.getProjectTasks = function (teamId, projectId, cb) {
+        this._callApi('getProjectTasks', arguments);
+    };
+    
+    // Create a new task and add it to my list.
+    AndBang.prototype.createTaskForMe = function (teamId, taskAttributes, cb) {
+        this._callApi('createTaskForMe', arguments);
+    };
+    
+    // Create a new task and add it to your teammates&#39;s list
+    AndBang.prototype.createTaskForTeammate = function (teamId, userId, taskAttributes, cb) {
+        this._callApi('createTaskForTeammate', arguments);
+    };
+    
+    // Get all the tasks for a given team member.
+    AndBang.prototype.getMemberTasks = function (teamId, userId, cb) {
+        this._callApi('getMemberTasks', arguments);
+    };
+    
+    // Get all the tasks that have been assigned to this person by someone else on this team.
+    AndBang.prototype.getMemberAssignedTasks = function (teamId, userId, cb) {
+        this._callApi('getMemberAssignedTasks', arguments);
+    };
+    
+    // Get all the tasks that have been deferred by (or for) this person on this team.
+    AndBang.prototype.getMemberLateredTasks = function (teamId, userId, cb) {
+        this._callApi('getMemberLateredTasks', arguments);
+    };
+    
+    // Get tasks this person has shipped.
+    AndBang.prototype.getMemberShippedTasks = function (teamId, userId, cb) {
+        this._callApi('getMemberShippedTasks', arguments);
+    };
+    
+    // Get the tasks this person is watching.
+    AndBang.prototype.getMemberWatchedTasks = function (teamId, userId, cb) {
+        this._callApi('getMemberWatchedTasks', arguments);
+    };
+    
+    // Get the task this person is working on.
+    AndBang.prototype.getMemberActiveTask = function (teamId, userId, cb) {
+        this._callApi('getMemberActiveTask', arguments);
+    };
+    
+    // Get details about a single invitation
+    AndBang.prototype.getInvite = function (teamId, inviteId, cb) {
+        this._callApi('getInvite', arguments);
+    };
+    
+    // Get array of everybody who has been invited to the team
+    AndBang.prototype.getInvites = function (teamId, cb) {
+        this._callApi('getInvites', arguments);
+    };
+    
+    // Create a new invitation to add someone to your team.
+    AndBang.prototype.createInvite = function (teamId, inviteeEmailAddress, cb) {
+        this._callApi('createInvite', arguments);
+    };
+    
+    // Re-send and existing invitation
+    AndBang.prototype.resendInvite = function (teamId, inviteId, cb) {
+        this._callApi('resendInvite', arguments);
+    };
+    
+    // Accept an invitation to join a team.
+    AndBang.prototype.acceptInvite = function (teamId, inviteId, cb) {
+        this._callApi('acceptInvite', arguments);
+    };
+    
+    // Delete an invitation. Makes invitation unusable if someone tries to use it to join the team.
+    AndBang.prototype.deleteInvite = function (teamId, inviteId, cb) {
+        this._callApi('deleteInvite', arguments);
+    };
+    
+    // Creates a new chat.
+    AndBang.prototype.createChat = function (teamId, chatAttributes, cb) {
+        this._callApi('createChat', arguments);
+    };
+    
 
     // attach to windor or export with commonJS
     if (typeof exports !== 'undefined') {

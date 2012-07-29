@@ -12,7 +12,8 @@
   "dependencies": {
     "socket.io-client": "",
     "precommit-hook": "",
-    "mustache": "git+https://github.com/janl/mustache.js.git"
+    "mustache": "git+https://github.com/janl/mustache.js.git",
+    "andbang-spec": "git+https://github.com/andyet/andbang-spec.git"
   },
   "devDependencies": {
     "jshint": ""

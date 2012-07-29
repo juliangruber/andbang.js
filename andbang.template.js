@@ -202,10 +202,11 @@
     };
 
     {{#methods}}
+    // {{description}}
     AndBang.prototype.{{methodName}} = function ({{params}}) {
         this._callApi('{{methodName}}', arguments);
     };
-
+    
     {{/methods}}
 
     // attach to windor or export with commonJS
