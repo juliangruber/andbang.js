@@ -241,31 +241,6 @@
         this._callApi('shipTask', arguments);
     };
     
-    // Create a new project.
-    AndBang.prototype.createProject = function (teamId, projectAttributes, cb) {
-        this._callApi('createProject', arguments);
-    };
-    
-    // Update project attributes.
-    AndBang.prototype.updateProject = function (teamId, projectId, projectAttributes, cb) {
-        this._callApi('updateProject', arguments);
-    };
-    
-    // Delete a project. As a safeguard, this can only be done if all the tasks are deleted first.
-    AndBang.prototype.deleteProject = function (teamId, projectId, cb) {
-        this._callApi('deleteProject', arguments);
-    };
-    
-    // List projects.
-    AndBang.prototype.getProjects = function (teamId, cb) {
-        this._callApi('getProjects', arguments);
-    };
-    
-    // Get all the tasks in a given project
-    AndBang.prototype.getProjectTasks = function (teamId, projectId, cb) {
-        this._callApi('getProjectTasks', arguments);
-    };
-    
     // Create a new task and add it to my list.
     AndBang.prototype.createTaskForMe = function (teamId, taskAttributes, cb) {
         this._callApi('createTaskForMe', arguments);
@@ -274,6 +249,11 @@
     // Create a new task and add it to your teammates&#39;s list
     AndBang.prototype.createTaskForTeammate = function (teamId, userId, taskAttributes, cb) {
         this._callApi('createTaskForTeammate', arguments);
+    };
+    
+    // Gets all current tasks for team.
+    AndBang.prototype.getAllTasks = function (teamId, cb) {
+        this._callApi('getAllTasks', arguments);
     };
     
     // Get all the tasks for a given team member.
@@ -304,6 +284,41 @@
     // Get the task this person is working on.
     AndBang.prototype.getMemberActiveTask = function (teamId, userId, cb) {
         this._callApi('getMemberActiveTask', arguments);
+    };
+    
+    // Create a new project.
+    AndBang.prototype.createProject = function (teamId, projectAttributes, cb) {
+        this._callApi('createProject', arguments);
+    };
+    
+    // Update project attributes.
+    AndBang.prototype.updateProject = function (teamId, projectId, projectAttributes, cb) {
+        this._callApi('updateProject', arguments);
+    };
+    
+    // Delete a project. As a safeguard, this can only be done if all the tasks are deleted first.
+    AndBang.prototype.deleteProject = function (teamId, projectId, cb) {
+        this._callApi('deleteProject', arguments);
+    };
+    
+    // List projects.
+    AndBang.prototype.getProjects = function (teamId, cb) {
+        this._callApi('getProjects', arguments);
+    };
+    
+    // Get all the tasks in a given project
+    AndBang.prototype.getProjectTasks = function (teamId, projectId, cb) {
+        this._callApi('getProjectTasks', arguments);
+    };
+    
+    // Get a given member on the team.
+    AndBang.prototype.getMember = function (teamId, userId, cb) {
+        this._callApi('getMember', arguments);
+    };
+    
+    // Get members on the team.
+    AndBang.prototype.getMembers = function (teamId, cb) {
+        this._callApi('getMembers', arguments);
     };
     
     // Get details about a single invitation
