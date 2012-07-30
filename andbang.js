@@ -336,11 +336,6 @@
         this._callApi('deleteInvite', arguments);
     };
     
-    // Creates a new chat.
-    AndBang.prototype.createChat = function (teamId, chatAttributes, cb) {
-        this._callApi('createChat', arguments);
-    };
-    
 
     // attach to windor or export with commonJS
     if (typeof exports !== 'undefined') {
