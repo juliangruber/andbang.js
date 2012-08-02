@@ -145,7 +145,8 @@
         // set up our socket.io connection
         this.socket = root.io.connect(this.config.url, {
             'max reconnection attempts': this.config.reconnectAttempts,
-            'transports': this.config.transports
+            'transports': this.config.transports,
+            'force new connection': true
         });
 
         // emit connect event and call callback if passed in
