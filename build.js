@@ -6,7 +6,9 @@ var TEMPLATE = "andbang.template.js",
 
 var fs = require('fs'),
     mustache = require('mustache'),
-    andbangSpec = require('andbang-spec');
+    andbangSpec = require('andbang-spec'),
+    yetify = require('yetify'),
+    colors = require('colors');
     
 var methods = andbangSpec.getMethodsByApiType('js'),
     template = fs.readFileSync(TEMPLATE, 'utf-8'),
@@ -25,5 +27,6 @@ methods.forEach(function (method) {
 
 fs.writeFileSync(OUTPUT, mustache.render(template, api), 'utf-8');
 
-console.log(OUTPUT + ' file built.');
+console.log('\n' + yetify.andBangLogo() + ':');
+console.log(OUTPUT.bold + ' file built.'.grey + '\n');
 process.exit(0);    

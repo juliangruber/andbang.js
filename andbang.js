@@ -201,6 +201,10 @@
         }
     };
 
+    AndBang.prototype.disconnect = function () {
+        this.socket.disconnect();
+    };
+
     // Update the user properties of the logged in user.
     AndBang.prototype.updateMe = function (userAttributes, cb) {
         this._callApi('updateMe', arguments);

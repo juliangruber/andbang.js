@@ -201,6 +201,10 @@
         }
     };
 
+    AndBang.prototype.disconnect = function () {
+        this.socket.disconnect();
+    };
+
     {{#methods}}
     // {{description}}
     AndBang.prototype.{{methodName}} = function ({{params}}) {
