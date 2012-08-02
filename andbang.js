@@ -201,19 +201,19 @@
         }
     };
 
-    // Change user properties.
-    AndBang.prototype.updateUser = function (userAttributes, cb) {
-        this._callApi('updateUser', arguments);
+    // Update the user properties of the logged in user.
+    AndBang.prototype.updateMe = function (userAttributes, cb) {
+        this._callApi('updateMe', arguments);
     };
     
     // Get team attributes of teams that you&#39;re part of.
-    AndBang.prototype.getTeams = function (cb) {
-        this._callApi('getTeams', arguments);
+    AndBang.prototype.getMyTeams = function (cb) {
+        this._callApi('getMyTeams', arguments);
     };
     
     // Get team attributes and related data for all teams you&#39;re part of.
-    AndBang.prototype.getAllTeamData = function (cb) {
-        this._callApi('getAllTeamData', arguments);
+    AndBang.prototype.getAllMyTeamData = function (cb) {
+        this._callApi('getAllMyTeamData', arguments);
     };
     
     // Updates task attributes.
@@ -349,6 +349,56 @@
     // Delete an invitation. Makes invitation unusable if someone tries to use it to join the team.
     AndBang.prototype.deleteInvite = function (teamId, inviteId, cb) {
         this._callApi('deleteInvite', arguments);
+    };
+    
+    // Creates a new chat.
+    AndBang.prototype.startChat = function (teamId, chatAttributes, cb) {
+        this._callApi('startChat', arguments);
+    };
+    
+    // Destroys a chat room
+    AndBang.prototype.endChat = function (teamId, chatId, cb) {
+        this._callApi('endChat', arguments);
+    };
+    
+    // Add a user to a chat.
+    AndBang.prototype.addUserToChat = function (teamId, chatId, userId, cb) {
+        this._callApi('addUserToChat', arguments);
+    };
+    
+    // Returns the users currently in the chat.
+    AndBang.prototype.getUsersInChat = function (teamId, chatId, cb) {
+        this._callApi('getUsersInChat', arguments);
+    };
+    
+    // Removes a user from the chat.
+    AndBang.prototype.removeMemberFromChat = function (teamId, chatId, userId, cb) {
+        this._callApi('removeMemberFromChat', arguments);
+    };
+    
+    // Sets the subject of the chat.
+    AndBang.prototype.setSubjectOfChat = function (teamId, chatId, subject, cb) {
+        this._callApi('setSubjectOfChat', arguments);
+    };
+    
+    // Gets the current subject of the chat.
+    AndBang.prototype.getSubjectOfChat = function (teamId, chatId, subject, cb) {
+        this._callApi('getSubjectOfChat', arguments);
+    };
+    
+    // Sends a chat message to the room.
+    AndBang.prototype.sendChatMessage = function (teamId, chatId, message, cb) {
+        this._callApi('sendChatMessage', arguments);
+    };
+    
+    // Get the past chat messages.
+    AndBang.prototype.getChatHistory = function (teamId, chatId, cb) {
+        this._callApi('getChatHistory', arguments);
+    };
+    
+    // Search within the chat.
+    AndBang.prototype.searchChatHistory = function (teamId, chatId, cb) {
+        this._callApi('searchChatHistory', arguments);
     };
     
 
