@@ -13,7 +13,7 @@
     "socket.io-client": "",
     "precommit-hook": "",
     "mustache": "git+https://github.com/janl/mustache.js.git",
-    "andbang-spec": "git+ssh://git@github.com:andyet/andbang-spec.git",
+    "andbang-spec": "git+ssh://git@github.com:andyet/andbang-spec.git#v0.0.2",
     "yetify": "",
     "colors": ""
   },

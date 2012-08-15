@@ -206,6 +206,16 @@
         this.socket.disconnect();
     };
 
+    // Get the user properties of the logged in user.
+    AndBang.prototype.getUser = function (userId, cb) {
+        this._callApi('getUser', arguments);
+    };
+    
+    // Get the user properties of the logged in user.
+    AndBang.prototype.getMe = function (cb) {
+        this._callApi('getMe', arguments);
+    };
+    
     // Update the user properties of the logged in user.
     AndBang.prototype.updateMe = function (userAttributes, cb) {
         this._callApi('updateMe', arguments);
@@ -219,6 +229,11 @@
     // Get team attributes and related data for all teams you&#39;re part of.
     AndBang.prototype.getAllMyTeamData = function (cb) {
         this._callApi('getAllMyTeamData', arguments);
+    };
+    
+    // Gets full task details for a given task.
+    AndBang.prototype.getTask = function (teamId, taskId, cb) {
+        this._callApi('getTask', arguments);
     };
     
     // Updates task attributes.
@@ -246,6 +261,31 @@
         this._callApi('shipTask', arguments);
     };
     
+    // If you shipped a task, but it wasn&#39;t actually done, this undoes that
+    AndBang.prototype.unshipTask = function (teamId, taskId, cb) {
+        this._callApi('unshipTask', arguments);
+    };
+    
+    // Start watching a task.
+    AndBang.prototype.watchTask = function (teamId, taskId, cb) {
+        this._callApi('watchTask', arguments);
+    };
+    
+    // Stop watching a task.
+    AndBang.prototype.unwatchTask = function (teamId, taskId, cb) {
+        this._callApi('unwatchTask', arguments);
+    };
+    
+    // You&#39;re not going to do this task now. This marks it as 
+    AndBang.prototype.laterTask = function (teamId, taskId, cb) {
+        this._callApi('laterTask', arguments);
+    };
+    
+    // Moves the latered item back into your current list.
+    AndBang.prototype.unlaterTask = function (teamId, taskId, cb) {
+        this._callApi('unlaterTask', arguments);
+    };
+    
     // Create a new task and add it to my list.
     AndBang.prototype.createTaskForMe = function (teamId, taskAttributes, cb) {
         this._callApi('createTaskForMe', arguments);
@@ -266,11 +306,6 @@
         this._callApi('getMemberTasks', arguments);
     };
     
-    // Get all the tasks that have been assigned to this person by someone else on this team.
-    AndBang.prototype.getMemberAssignedTasks = function (teamId, userId, cb) {
-        this._callApi('getMemberAssignedTasks', arguments);
-    };
-    
     // Get all the tasks that have been deferred by (or for) this person on this team.
     AndBang.prototype.getMemberLateredTasks = function (teamId, userId, cb) {
         this._callApi('getMemberLateredTasks', arguments);
@@ -289,6 +324,31 @@
     // Get the task this person is working on.
     AndBang.prototype.getMemberActiveTask = function (teamId, userId, cb) {
         this._callApi('getMemberActiveTask', arguments);
+    };
+    
+    // Get my current tasks.
+    AndBang.prototype.getMyTasks = function (teamId, cb) {
+        this._callApi('getMyTasks', arguments);
+    };
+    
+    // Get all tasks I&#39;ve latered on this team.
+    AndBang.prototype.getMyLateredTasks = function (teamId, cb) {
+        this._callApi('getMyLateredTasks', arguments);
+    };
+    
+    // Get tasks that I&#39;ve shipped recently.
+    AndBang.prototype.getMyShippedTasks = function (teamId, userId, cb) {
+        this._callApi('getMyShippedTasks', arguments);
+    };
+    
+    // Get the tasks that I&#39;m watching.
+    AndBang.prototype.getMyWatchedTasks = function (teamId, cb) {
+        this._callApi('getMyWatchedTasks', arguments);
+    };
+    
+    // Get the task that I&#39;m working on.
+    AndBang.prototype.getMyActiveTask = function (teamId, cb) {
+        this._callApi('getMyActiveTask', arguments);
     };
     
     // Create a new project.
@@ -354,56 +414,6 @@
     // Delete an invitation. Makes invitation unusable if someone tries to use it to join the team.
     AndBang.prototype.deleteInvite = function (teamId, inviteId, cb) {
         this._callApi('deleteInvite', arguments);
-    };
-    
-    // Creates a new chat.
-    AndBang.prototype.startChat = function (teamId, chatAttributes, cb) {
-        this._callApi('startChat', arguments);
-    };
-    
-    // Destroys a chat room
-    AndBang.prototype.endChat = function (teamId, chatId, cb) {
-        this._callApi('endChat', arguments);
-    };
-    
-    // Add a user to a chat.
-    AndBang.prototype.addUserToChat = function (teamId, chatId, userId, cb) {
-        this._callApi('addUserToChat', arguments);
-    };
-    
-    // Returns the users currently in the chat.
-    AndBang.prototype.getUsersInChat = function (teamId, chatId, cb) {
-        this._callApi('getUsersInChat', arguments);
-    };
-    
-    // Removes a user from the chat.
-    AndBang.prototype.removeMemberFromChat = function (teamId, chatId, userId, cb) {
-        this._callApi('removeMemberFromChat', arguments);
-    };
-    
-    // Sets the subject of the chat.
-    AndBang.prototype.setSubjectOfChat = function (teamId, chatId, subject, cb) {
-        this._callApi('setSubjectOfChat', arguments);
-    };
-    
-    // Gets the current subject of the chat.
-    AndBang.prototype.getSubjectOfChat = function (teamId, chatId, subject, cb) {
-        this._callApi('getSubjectOfChat', arguments);
-    };
-    
-    // Sends a chat message to the room.
-    AndBang.prototype.sendChatMessage = function (teamId, chatId, message, cb) {
-        this._callApi('sendChatMessage', arguments);
-    };
-    
-    // Get the past chat messages.
-    AndBang.prototype.getChatHistory = function (teamId, chatId, cb) {
-        this._callApi('getChatHistory', arguments);
-    };
-    
-    // Search within the chat.
-    AndBang.prototype.searchChatHistory = function (teamId, chatId, cb) {
-        this._callApi('searchChatHistory', arguments);
     };
     
 
