@@ -58,13 +58,23 @@
     };
 
     // Emit `event` with the given args.
+    // also calls any `all` handlers
     Emitter.prototype.emit = function (event) {
         var args = [].slice.call(arguments, 1),
-            callbacks = this.callbacks[event];
+            callbacks = this.callbacks[event],
+            globalCallbacks = this.callbacks.all,
+            i,
+            len;
 
         if (callbacks) {
-            for (var i = 0, len = callbacks.length; i < len; ++i) {
+            for (i = 0, len = callbacks.length; i < len; ++i) {
                 callbacks[i].apply(this, args);
+            }
+        }
+
+        if (globalCallbacks) {
+            for (i = 0, len = globalCallbacks.length; i < len; ++i) {
+                globalCallbacks[i].apply(this, [event].concat(args));
             }
         }
 
