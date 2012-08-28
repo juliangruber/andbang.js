@@ -20,6 +20,7 @@ var methods = andbangSpec.getMethodsByApiType('js'),
     api = {"methods": []};
 
 methods.forEach(function (method) {
+    if (method.visibility !== 'public') return;
     var params = method.params.map(function (param) { return param.name; });
     params.push("cb");
     params = params.join(", ");

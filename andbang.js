@@ -217,11 +217,6 @@
     };
 
     // Get the user properties of the logged in user.
-    AndBang.prototype.getUser = function (userId, cb) {
-        this._callApi('getUser', arguments);
-    };
-    
-    // Get the user properties of the logged in user.
     AndBang.prototype.getMe = function (cb) {
         this._callApi('getMe', arguments);
     };
