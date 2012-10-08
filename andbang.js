@@ -147,7 +147,9 @@
                 'favoriteTask',
                 'updateTeam',
                 'deleteTeam',
-                'newProject'
+                'newProject',
+                'chat',
+                'privateChat'
             ],
             i = 0,
             l = apiEvents.length;
@@ -281,7 +283,7 @@
         this._callApi('unwatchTask', arguments);
     };
     
-    // You&#39;re not going to do this task now. This marks it as 
+    // You&#39;re not going to do this task now.
     AndBang.prototype.laterTask = function (teamId, taskId, cb) {
         this._callApi('laterTask', arguments);
     };
@@ -289,6 +291,16 @@
     // Moves the latered item back into your current list.
     AndBang.prototype.unlaterTask = function (teamId, taskId, cb) {
         this._callApi('unlaterTask', arguments);
+    };
+    
+    // Start working on a task. This will also stop working on other tasks you may have active.
+    AndBang.prototype.startTask = function (teamId, taskId, cb) {
+        this._callApi('startTask', arguments);
+    };
+    
+    // Stop working on a task.
+    AndBang.prototype.stopTask = function (teamId, taskId, cb) {
+        this._callApi('stopTask', arguments);
     };
     
     // Create a new task and add it to my list.
@@ -311,11 +323,6 @@
         this._callApi('getMemberTasks', arguments);
     };
     
-    // Get all the tasks that have been deferred by (or for) this person on this team.
-    AndBang.prototype.getMemberLateredTasks = function (teamId, userId, cb) {
-        this._callApi('getMemberLateredTasks', arguments);
-    };
-    
     // Get tasks this person has shipped.
     AndBang.prototype.getMemberShippedTasks = function (teamId, userId, cb) {
         this._callApi('getMemberShippedTasks', arguments);
@@ -326,34 +333,19 @@
         this._callApi('getMemberWatchedTasks', arguments);
     };
     
-    // Get the task this person is working on.
-    AndBang.prototype.getMemberActiveTask = function (teamId, userId, cb) {
-        this._callApi('getMemberActiveTask', arguments);
-    };
-    
     // Get my current tasks.
     AndBang.prototype.getMyTasks = function (teamId, cb) {
         this._callApi('getMyTasks', arguments);
     };
     
-    // Get all tasks I&#39;ve latered on this team.
-    AndBang.prototype.getMyLateredTasks = function (teamId, cb) {
-        this._callApi('getMyLateredTasks', arguments);
-    };
-    
     // Get tasks that I&#39;ve shipped recently.
-    AndBang.prototype.getMyShippedTasks = function (teamId, userId, cb) {
+    AndBang.prototype.getMyShippedTasks = function (teamId, cb) {
         this._callApi('getMyShippedTasks', arguments);
     };
     
     // Get the tasks that I&#39;m watching.
     AndBang.prototype.getMyWatchedTasks = function (teamId, cb) {
         this._callApi('getMyWatchedTasks', arguments);
-    };
-    
-    // Get the task that I&#39;m working on.
-    AndBang.prototype.getMyActiveTask = function (teamId, cb) {
-        this._callApi('getMyActiveTask', arguments);
     };
     
     // Create a new project.
@@ -391,34 +383,9 @@
         this._callApi('getMembers', arguments);
     };
     
-    // Get details about a single invitation
-    AndBang.prototype.getInvite = function (teamId, inviteId, cb) {
-        this._callApi('getInvite', arguments);
-    };
-    
-    // Get array of everybody who has been invited to the team
-    AndBang.prototype.getInvites = function (teamId, cb) {
-        this._callApi('getInvites', arguments);
-    };
-    
-    // Create a new invitation to add someone to your team.
-    AndBang.prototype.createInvite = function (teamId, inviteeEmailAddress, cb) {
-        this._callApi('createInvite', arguments);
-    };
-    
-    // Re-send and existing invitation
-    AndBang.prototype.resendInvite = function (teamId, inviteId, cb) {
-        this._callApi('resendInvite', arguments);
-    };
-    
-    // Accept an invitation to join a team.
-    AndBang.prototype.acceptInvite = function (teamId, inviteId, cb) {
-        this._callApi('acceptInvite', arguments);
-    };
-    
-    // Delete an invitation. Makes invitation unusable if someone tries to use it to join the team.
-    AndBang.prototype.deleteInvite = function (teamId, inviteId, cb) {
-        this._callApi('deleteInvite', arguments);
+    // Send a chat message.
+    AndBang.prototype.sendChat = function (teamId, chatAttributes, cb) {
+        this._callApi('sendChat', arguments);
     };
     
 
