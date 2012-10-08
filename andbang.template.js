@@ -147,7 +147,9 @@
                 'favoriteTask',
                 'updateTeam',
                 'deleteTeam',
-                'newProject'
+                'newProject',
+                'chat',
+                'privateChat'
             ],
             i = 0,
             l = apiEvents.length;
