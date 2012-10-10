@@ -11,18 +11,18 @@
   "main": "./andbang.js",
   "dependencies": {
     "socket.io-client": "",
+    "jshint": ""
+  },
+  "devDependencies": {
     "jshint": "",
     "precommit-hook": "",
     "mustache": "git+https://github.com/janl/mustache.js.git",
-    "andbang-spec": "git+ssh://git@github.com:andyet/andbang-spec.git#v0.0.9",
+    "andbang-spec": "git+ssh://git@github.com:andyet/andbang-spec.git#v0.0.10",
     "yetify": "",
     "colors": "",
-    "uglify-js": ""
+    "uglify-js": "",
+    "wildemitter": ""
   },
-  "devDependencies": {
-    "jshint": ""
-  },
-  "optionalDependencies": {},
   "engines": {
     "node": "*"
   }

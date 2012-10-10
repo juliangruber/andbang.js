@@ -4,7 +4,6 @@
 /*global __dirname*/
 var fileName = 'andbang.js',
     minFileName = 'andbang.min.js',
-    templatePath = __dirname + "/andbang.template.js",
     outputPath = __dirname + '/' + fileName,
     minifiedPath = __dirname + '/' + minFileName;
 
@@ -16,18 +15,34 @@ var fs = require('fs'),
     colors = require('colors');
     
 var methods = andbangSpec.getMethodsByApiType('js'),
-    template = fs.readFileSync(templatePath, 'utf-8'),
-    api = {"methods": []};
+    template = fs.readFileSync(__dirname + '/src/andbang.template.js', 'utf-8').toString(),
+    emitter = fs.readFileSync(__dirname + '/node_modules/wildemitter/wildemitter-bare.js', 'utf-8').toString(),
+    api = {
+        methods: [],
+        emitter: indent(emitter)
+    };
+
+// indents the file by given amount
+function indent(file, indentAmount) {
+    var split = file.split('\n'),
+        actualIndent = indentAmount || '    ',
+        i = 0,
+        l = split.length;
+    for (; i < l; i++) {
+        split[i] = actualIndent + split[i];
+    }
+    return split.join('\n');
+}
 
 methods.forEach(function (method) {
     if (method.visibility !== 'public') return;
     var params = method.params.map(function (param) { return param.name; });
-    params.push("cb");
-    params = params.join(", ");
+    params.push('cb');
+    params = params.join(', ');
     api.methods.push({
-        "methodName": method.name,
-        "params": params,
-        "description": method.description
+        methodName: method.name,
+        params: params,
+        description: method.description
     });
 });
 

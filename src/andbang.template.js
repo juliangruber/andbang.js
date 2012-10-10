@@ -13,74 +13,7 @@
     // Conditionally import socket.io-client or just use global if present
     root.io || (root.io = require('socket.io-client'));
 
-    // We're using @tjholowaychuck's emitter from UI Kit. Because it's slick and lightweight
-    // much props.
-    function Emitter() {
-        this.callbacks = {};
-    }
-
-    // Listen on the given `event` with `fn`.
-    Emitter.prototype.on = function (event, fn) {
-        (this.callbacks[event] = this.callbacks[event] || []).push(fn);
-        return this;
-    };
-
-    // Adds an `event` listener that will be invoked a single
-    // time then automatically removed.
-    Emitter.prototype.once = function (event, fn) {
-        var self = this;
-        function on() {
-            self.off(event, on);
-            fn.apply(this, arguments);
-        }
-        this.on(event, on);
-        return this;
-    };
-
-    // Remove the given callback for `event` or all
-    // registered callbacks.
-    Emitter.prototype.off = function (event, fn) {
-        var callbacks = this.callbacks[event],
-            i;
-        
-        if (!callbacks) return this;
-
-        // remove all handlers
-        if (1 == arguments.length) {
-            delete this.callbacks[event];
-            return this;
-        }
-
-        // remove specific handler
-        i = callbacks.indexOf(fn);
-        callbacks.splice(i, 1);
-        return this;
-    };
-
-    // Emit `event` with the given args.
-    // also calls any `all` handlers
-    Emitter.prototype.emit = function (event) {
-        var args = [].slice.call(arguments, 1),
-            callbacks = this.callbacks[event],
-            globalCallbacks = this.callbacks.all,
-            i,
-            len;
-
-        if (callbacks) {
-            for (i = 0, len = callbacks.length; i < len; ++i) {
-                callbacks[i].apply(this, args);
-            }
-        }
-
-        if (globalCallbacks) {
-            for (i = 0, len = globalCallbacks.length; i < len; ++i) {
-                globalCallbacks[i].apply(this, [event].concat(args));
-            }
-        }
-
-        return this;
-    };
-
+{{{emitter}}}
 
     // Main export
     var AndBang = function (config) {
@@ -97,14 +30,14 @@
         extend(opts, config);
         
         // extend with emitter
-        Emitter.call(this);
+        WildEmitter.call(this);
 
         // if tokens are passed in, connect right away
         if (opts.token && opts.autoConnect) this.connect();
     };
 
     // inherit from emitter
-    AndBang.prototype = new Emitter();
+    AndBang.prototype = new WildEmitter();
 
     // validate a token
     AndBang.prototype.validateToken = function (token, cb) {
