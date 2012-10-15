@@ -179,10 +179,10 @@
                 'startTask',
                 'stopTask',
                 'laterTask',
+                'sortTask',
                 'unlaterTask',
                 'assignTask',
                 'unassignTask',
-                'moveTask',
                 'favoriteTask',
                 'updateTeam',
                 'deleteTeam',
@@ -340,6 +340,11 @@
     // Stop working on a task.
     AndBang.prototype.stopTask = function (teamId, taskId, cb) {
         this._callApi('stopTask', arguments);
+    };
+    
+    // Move a task to a new position in your list. You can do this for stuff in your current and latered lists. Without having to specify which. If you set a number higher than the lenght of the list, task will just be moved to the end of the list.
+    AndBang.prototype.setTaskPosition = function (teamId, taskId, newPosition, cb) {
+        this._callApi('setTaskPosition', arguments);
     };
     
     // Create a new task and add it to my list.
