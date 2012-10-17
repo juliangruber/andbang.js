@@ -267,6 +267,16 @@
         this._callApi('updateMe', arguments);
     };
     
+    // Sets &#39;presence&#39; attribute to &#39;online&#39; for all teams you&#39;re on.
+    AndBang.prototype.goOnline = function (cb) {
+        this._callApi('goOnline', arguments);
+    };
+    
+    // Sets &#39;presence&#39; attribute to &#39;offline&#39; for all teams you&#39;re on.
+    AndBang.prototype.goOffline = function (cb) {
+        this._callApi('goOffline', arguments);
+    };
+    
     // Get team attributes of teams that you&#39;re part of.
     AndBang.prototype.getMyTeams = function (cb) {
         this._callApi('getMyTeams', arguments);
