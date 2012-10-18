@@ -188,7 +188,8 @@
                 'deleteTeam',
                 'newProject',
                 'chat',
-                'privateChat'
+                'privateChat',
+                'presenceUpdate'
             ],
             i = 0,
             l = apiEvents.length;
@@ -450,6 +451,11 @@
     // Send a chat message.
     AndBang.prototype.sendChat = function (teamId, chatAttributes, cb) {
         this._callApi('sendChat', arguments);
+    };
+    
+    // Get recent chats
+    AndBang.prototype.getRecentChats = function (teamId, limit, cb) {
+        this._callApi('getRecentChats', arguments);
     };
     
 

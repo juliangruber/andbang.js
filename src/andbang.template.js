@@ -86,7 +86,8 @@
                 'deleteTeam',
                 'newProject',
                 'chat',
-                'privateChat'
+                'privateChat',
+                'presenceUpdate'
             ],
             i = 0,
             l = apiEvents.length;
