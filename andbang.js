@@ -453,9 +453,9 @@
         this._callApi('sendChat', arguments);
     };
     
-    // Get recent chats
-    AndBang.prototype.getRecentChats = function (teamId, limit, cb) {
-        this._callApi('getRecentChats', arguments);
+    // Retrieve chat history.
+    AndBang.prototype.getChatHistory = function (teamId, cb) {
+        this._callApi('getChatHistory', arguments);
     };
     
 
