@@ -453,9 +453,19 @@
         this._callApi('sendChat', arguments);
     };
     
+    // Send a direct chat message.
+    AndBang.prototype.sendDirectChat = function (teamId, userId, chatAttributes, cb) {
+        this._callApi('sendDirectChat', arguments);
+    };
+    
     // Retrieve chat history.
     AndBang.prototype.getChatHistory = function (teamId, cb) {
         this._callApi('getChatHistory', arguments);
+    };
+    
+    // Retrieve direct chat history.
+    AndBang.prototype.getDirectChatHistory = function (teamId, userId, cb) {
+        this._callApi('getDirectChatHistory', arguments);
     };
     
 
