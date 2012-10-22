@@ -86,7 +86,7 @@
                 'deleteTeam',
                 'newProject',
                 'chat',
-                'privateChat',
+                'directChat',
                 'presenceUpdate'
             ],
             i = 0,
