@@ -112,6 +112,32 @@
             self.emit('disconnected');
         });
 
+        // gracefully, seamlessly handle reconnects
+        this.socket.on('reconnect', function () {
+            if (self.lastEvent) {
+                // we have to to this 'next tick' because otherwise the server doesn't know
+                // who we are yet, it's weird.
+                setTimeout(function () {
+                    self.socket.emit('getEventsSinceId', self.lastEvent, function (err, res) {
+                        var parsed;
+                            
+                        // if it's been too long and we don't have any events
+                        // emit a staleReconnect and then disconnect from the api.
+                        if (err) {
+                            self.emit('staleReconnect');
+                            self.disconnect();
+                        } else {
+                            parsed = JSON.parse(res);
+                            parsed.forEach(function (event) {
+                                var parsed = JSON.parse(event);
+                                self.emit(parsed.channel, parsed);
+                            });
+                        }
+                    });
+                }, 0);
+            }
+        });
+
         // emit connection error if it's auth failure.
         // and emit other errors too.
         this.socket.on('error', function (reason) {
@@ -123,6 +149,8 @@
         for (; i < l; i++) {
             this.socket.on(apiEvents[i], function (event) {
                 return function (payload) {
+                    // tack on last received event for tracking
+                    if (payload.eventNumber) self.lastEvent = payload.eventNumber;
                     self.emit(event, payload);
                 };
             }(apiEvents[i]));
