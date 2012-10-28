@@ -190,7 +190,8 @@
                 'chat',
                 'directChat',
                 'presenceUpdate',
-                'notification'
+                'notification',
+                'clearNotifications'
             ],
             i = 0,
             l = apiEvents.length;
@@ -319,6 +320,11 @@
     // Get notifications for my user in a given team.
     AndBang.prototype.getMyNotifications = function (teamId, cb) {
         this._callApi('getMyNotifications', arguments);
+    };
+    
+    // Clear all notifications for my user in a given team.
+    AndBang.prototype.clearMyNotifications = function (teamId, cb) {
+        this._callApi('clearMyNotifications', arguments);
     };
     
     // Gets full task details for a given task.

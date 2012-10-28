@@ -88,7 +88,8 @@
                 'chat',
                 'directChat',
                 'presenceUpdate',
-                'notification'
+                'notification',
+                'clearNotifications'
             ],
             i = 0,
             l = apiEvents.length;
