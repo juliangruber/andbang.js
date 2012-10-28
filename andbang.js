@@ -231,8 +231,7 @@
                         } else {
                             parsed = JSON.parse(res);
                             parsed.forEach(function (event) {
-                                var parsed = JSON.parse(event);
-                                self.emit(parsed.channel, parsed);
+                                self.emit(event.channel, event);
                             });
                         }
                     });
