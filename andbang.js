@@ -189,7 +189,8 @@
                 'newProject',
                 'chat',
                 'directChat',
-                'presenceUpdate'
+                'presenceUpdate',
+                'notification'
             ],
             i = 0,
             l = apiEvents.length;
@@ -313,6 +314,11 @@
     // Get team attributes and related data for all teams you&#39;re part of.
     AndBang.prototype.getAllMyTeamData = function (cb) {
         this._callApi('getAllMyTeamData', arguments);
+    };
+    
+    // Get notifications for my user in a given team.
+    AndBang.prototype.getMyNotifications = function (teamId, cb) {
+        this._callApi('getMyNotifications', arguments);
     };
     
     // Gets full task details for a given task.

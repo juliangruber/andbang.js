@@ -87,7 +87,8 @@
                 'newProject',
                 'chat',
                 'directChat',
-                'presenceUpdate'
+                'presenceUpdate',
+                'notification'
             ],
             i = 0,
             l = apiEvents.length;
