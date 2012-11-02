@@ -90,7 +90,9 @@
                 'directChat',
                 'presenceUpdate',
                 'notification',
-                'clearNotifications'
+                'clearNotifications',
+                'pinned',
+                'unpinned'
             ],
             i = 0,
             l = apiEvents.length;
