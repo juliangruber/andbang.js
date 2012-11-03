@@ -194,7 +194,9 @@
                 'notification',
                 'clearNotifications',
                 'pinned',
-                'unpinned'
+                'unpinned',
+                'interaction',
+                'assignedTask'
             ],
             i = 0,
             l = apiEvents.length;
