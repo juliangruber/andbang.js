@@ -417,6 +417,11 @@
         this._callApi('getAllTasks', arguments);
     };
     
+    // Get tasks the team has shipped. Shows 100 most recent to start.
+    AndBang.prototype.getTeamShippedTasks = function (teamId, cb) {
+        this._callApi('getTeamShippedTasks', arguments);
+    };
+    
     // Get all the tasks for a given team member.
     AndBang.prototype.getMemberTasks = function (teamId, userId, cb) {
         this._callApi('getMemberTasks', arguments);
