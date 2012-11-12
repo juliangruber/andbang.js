@@ -40,9 +40,10 @@
     AndBang.prototype = new WildEmitter();
 
     // validate a token
-    AndBang.prototype.validateToken = function (token, cb) {
+    AndBang.prototype.validateToken = function (token, optionalCallback) {
         var self = this,
-            currentArgs = arguments;
+            currentArgs = arguments,
+            cb = optionalCallback || function () {};
         if (this.connected) {
             this.socket.emit('validateSession', token, function (err, user) {
                 if (user) {
