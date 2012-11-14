@@ -498,14 +498,9 @@
         this._callApi('getMembers', arguments);
     };
     
-    // Mark a team member as &#39;pinned&#39;. This is used for interfaces where you have a large team and you want to indicate the people you work most closely with.
-    AndBang.prototype.pinMember = function (teamId, userId, cb) {
-        this._callApi('pinMember', arguments);
-    };
-    
-    // Unpin a &#39;pinned&#39; team member. This is used for interfaces where you have a large team and you want to indicate the people you work most closely with.
-    AndBang.prototype.unpinMember = function (teamId, userId, cb) {
-        this._callApi('unpinMember', arguments);
+    // Sets your recent interactions with a user to zero. This is useful for removing a user from your list of recent interactions
+    AndBang.prototype.resetLastInteraction = function (teamId, userId, cb) {
+        this._callApi('resetLastInteraction', arguments);
     };
     
     // Send a chat message.

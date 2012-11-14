@@ -20,7 +20,8 @@
     "yetify": "",
     "colors": "",
     "uglify-js": "",
-    "wildemitter": ""
+    "wildemitter": "",
+    "underscore": ""
   },
   "engines": {
     "node": "*"
