@@ -194,8 +194,7 @@
                 'presenceUpdate',
                 'notification',
                 'clearNotifications',
-                'pinned',
-                'unpinned',
+                'resetLastInteraction',
                 'interaction',
                 'assignedTask'
             ],
@@ -498,7 +497,7 @@
         this._callApi('getMembers', arguments);
     };
     
-    // Sets your recent interactions with a user to zero. This is useful for removing a user from your list of recent interactions
+    // Resets your last interaction with a given team member to zero. This is useful for removing someone from lists that are built from or sorted by your recent interactions. This has no effect on anyone but you.
     AndBang.prototype.resetLastInteraction = function (teamId, userId, cb) {
         this._callApi('resetLastInteraction', arguments);
     };

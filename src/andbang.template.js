@@ -92,8 +92,7 @@
                 'presenceUpdate',
                 'notification',
                 'clearNotifications',
-                'pinned',
-                'unpinned',
+                'resetLastInteraction',
                 'interaction',
                 'assignedTask'
             ],
