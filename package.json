@@ -15,7 +15,7 @@
     "jshint": "",
     "precommit-hook": "",
     "mustache": "git+https://github.com/janl/mustache.js.git",
-    "andbang-spec": "git+ssh://git@github.com:andyet/andbang-spec.git#v0.1.15",
+    "andbang-spec": "git+ssh://git@github.com:andyet/andbang-spec.git#v0.2.5",
     "yetify": "",
     "colors": "",
     "uglify-js": "",

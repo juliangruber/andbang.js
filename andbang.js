@@ -347,11 +347,6 @@
         this._callApi('assignTask', arguments);
     };
     
-    // Unassigns a task. This can only be done if the task is already part of a project. Since all tasks must have an assignee or a related project.
-    AndBang.prototype.unassignTask = function (teamId, taskId, cb) {
-        this._callApi('unassignTask', arguments);
-    };
-    
     // Deletes a task completely.
     AndBang.prototype.deleteTask = function (teamId, taskId, cb) {
         this._callApi('deleteTask', arguments);
@@ -360,11 +355,6 @@
     // In And Bang we call completing a task &quot;shipping&quot;. This method does that.
     AndBang.prototype.shipTask = function (teamId, taskId, cb) {
         this._callApi('shipTask', arguments);
-    };
-    
-    // If you shipped a task, but it wasn&#39;t actually done, this undoes that
-    AndBang.prototype.unshipTask = function (teamId, taskId, cb) {
-        this._callApi('unshipTask', arguments);
     };
     
     // Start watching a task.
@@ -460,31 +450,6 @@
     // Get the tasks that I&#39;m watching.
     AndBang.prototype.getMyWatchedTasks = function (teamId, cb) {
         this._callApi('getMyWatchedTasks', arguments);
-    };
-    
-    // Create a new project.
-    AndBang.prototype.createProject = function (teamId, projectAttributes, cb) {
-        this._callApi('createProject', arguments);
-    };
-    
-    // Update project attributes.
-    AndBang.prototype.updateProject = function (teamId, projectId, projectAttributes, cb) {
-        this._callApi('updateProject', arguments);
-    };
-    
-    // Delete a project. As a safeguard, this can only be done if all the tasks are deleted first.
-    AndBang.prototype.deleteProject = function (teamId, projectId, cb) {
-        this._callApi('deleteProject', arguments);
-    };
-    
-    // List projects.
-    AndBang.prototype.getProjects = function (teamId, cb) {
-        this._callApi('getProjects', arguments);
-    };
-    
-    // Get all the tasks in a given project
-    AndBang.prototype.getProjectTasks = function (teamId, projectId, cb) {
-        this._callApi('getProjectTasks', arguments);
     };
     
     // Get a given member on the team.
