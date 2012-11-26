@@ -15,6 +15,7 @@ var fs = require('fs'),
     colors = require('colors');
     
 var methods = andbangSpec.getMethodsByApiType('js'),
+    events = andbangSpec.getAllEventTypes(),
     template = fs.readFileSync(__dirname + '/src/andbang.template.js', 'utf-8').toString(),
     emitter = fs.readFileSync(__dirname + '/node_modules/wildemitter/wildemitter-bare.js', 'utf-8').toString(),
     api = {
@@ -45,6 +46,13 @@ methods.forEach(function (method) {
         description: method.description
     });
 });
+
+// add quotes around all event names
+events.forEach(function (event, index) {
+    events[index] = '\'' + event + '\'';
+});
+
+api.events = events.join(',\n                ');
 
 var code = mustache.render(template, api);
 
