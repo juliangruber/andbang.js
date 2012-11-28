@@ -61,15 +61,9 @@ console.log('\n' + yetify.andBangLogo() + ':');
 fs.writeFileSync(outputPath, code, 'utf-8');
 console.log(fileName.bold + ' file built.'.grey);
 
-var ast = uglify.parser.parse(code),
-    pro = uglify.uglify,
-    minified;
+minified = uglify.minify(outputPath); // build out the code
 
-ast = pro.ast_mangle(ast); // get a new AST with mangled names
-ast = pro.ast_squeeze(ast); // get an AST with compression optimizations
-minified = pro.gen_code(ast); // build out the code
-
-fs.writeFileSync(minifiedPath, minified, 'utf-8');
+fs.writeFileSync(minifiedPath, minified.code, 'utf-8');
 
 console.log(minFileName.bold + ' file built.'.grey + '\n');
 process.exit(0);    
