@@ -190,6 +190,7 @@
                 'interaction',
                 'resetLastInteraction',
                 'addMember',
+                'notification',
                 'chat',
                 'directChat'
             ],
