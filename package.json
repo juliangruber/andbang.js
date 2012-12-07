@@ -2,7 +2,7 @@
   "author": "Henrik Joreteg <henrik@andyet.net>",
   "name": "andbang",
   "description": "Client for andbang api",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "repository": {
     "type": "git",
     "url": "git://github.com/andyet/andbang.js.git"
@@ -15,7 +15,7 @@
     "jshint": "",
     "precommit-hook": "",
     "mustache": "git+https://github.com/janl/mustache.js.git",
-    "andbang-spec": "git+ssh://git@github.com:andyet/andbang-spec.git#v2.0.2",
+    "andbang-spec": "git+ssh://git@github.com:andyet/andbang-spec.git#v2.0.5",
     "yetify": "",
     "colors": "",
     "uglify-js": "2.2.x",

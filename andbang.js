@@ -428,6 +428,11 @@
         this._callApi('getMemberWatchedTasks', arguments);
     };
     
+    // Get the task this person is working on.
+    AndBang.prototype.getMemberActiveTask = function (teamId, userId, cb) {
+        this._callApi('getMemberActiveTask', arguments);
+    };
+    
     // Get my current tasks.
     AndBang.prototype.getMyTasks = function (teamId, cb) {
         this._callApi('getMyTasks', arguments);
@@ -446,6 +451,11 @@
     // Get the tasks that I&#39;m watching.
     AndBang.prototype.getMyWatchedTasks = function (teamId, cb) {
         this._callApi('getMyWatchedTasks', arguments);
+    };
+    
+    // Get the task that I&#39;m working on.
+    AndBang.prototype.getMyActiveTask = function (teamId, cb) {
+        this._callApi('getMyActiveTask', arguments);
     };
     
     // Get a given member on the team.
