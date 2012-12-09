@@ -135,7 +135,7 @@
         WildEmitter.call(this);
 
         // if tokens are passed in, connect right away
-        if (opts.token && opts.autoConnect) this.connect();
+        if (opts.token && opts.autoConnect) this.validateToken(opts.token);
     };
 
     // inherit from emitter
