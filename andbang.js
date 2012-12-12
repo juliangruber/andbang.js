@@ -179,6 +179,7 @@
                 'assignTask',
                 'deleteTask',
                 'shipTask',
+                'unshipTask',
                 'watchTask',
                 'unwatchTask',
                 'laterTask',
@@ -189,8 +190,10 @@
                 'newTask',
                 'interaction',
                 'resetLastInteraction',
-                'addMember',
+                'removeMember',
                 'notification',
+                'addMember',
+                'deleteInvite',
                 'chat',
                 'directChat'
             ],
@@ -318,7 +321,7 @@
         this._callApi('getAllMyTeamData', arguments);
     };
     
-    // Get notifications for my user in a given team.
+    // Get notifications for my user in a given team. The newest ones are always returned first. Only the last 50 are kept in the database. So there&#39;s no need to limit requests.
     AndBang.prototype.getMyNotifications = function (teamId, cb) {
         this._callApi('getMyNotifications', arguments);
     };
@@ -351,6 +354,11 @@
     // In And Bang we call completing a task &quot;shipping&quot;. This method does that.
     AndBang.prototype.shipTask = function (teamId, taskId, cb) {
         this._callApi('shipTask', arguments);
+    };
+    
+    // If you shipped a task, but it wasn&#39;t actually done, this undoes that
+    AndBang.prototype.unshipTask = function (teamId, taskId, cb) {
+        this._callApi('unshipTask', arguments);
     };
     
     // Start watching a task.
@@ -398,7 +406,7 @@
         this._callApi('createTaskForTeammate', arguments);
     };
     
-    // Gets all current tasks for team.
+    // Gets all current and latered tasks for team in the order they were created.
     AndBang.prototype.getAllTasks = function (teamId, cb) {
         this._callApi('getAllTasks', arguments);
     };
@@ -471,6 +479,16 @@
     // Resets your last interaction with a given team member to zero. This is useful for removing someone from lists that are built from or sorted by your recent interactions. This has no effect on anyone but you.
     AndBang.prototype.resetLastInteraction = function (teamId, userId, cb) {
         this._callApi('resetLastInteraction', arguments);
+    };
+    
+    // Get details about a single invitation
+    AndBang.prototype.getInvite = function (teamId, inviteId, cb) {
+        this._callApi('getInvite', arguments);
+    };
+    
+    // Get array of everybody who has been invited to the team
+    AndBang.prototype.getInvites = function (teamId, cb) {
+        this._callApi('getInvites', arguments);
     };
     
     // Send a chat message.
