@@ -235,8 +235,7 @@
                             self.emit('staleReconnect');
                             self.disconnect();
                         } else {
-                            parsed = JSON.parse(res);
-                            parsed.forEach(function (event) {
+                            res.forEach(function (event) {
                                 self.emit(event.channel, event);
                             });
                         }
@@ -492,12 +491,12 @@
     };
     
     // Send a chat message.
-    AndBang.prototype.sendChat = function (teamId, chatAttributes, cb) {
+    AndBang.prototype.sendChat = function (teamId, chatMessage, cb) {
         this._callApi('sendChat', arguments);
     };
     
     // Send a direct chat message.
-    AndBang.prototype.sendDirectChat = function (teamId, userId, chatAttributes, cb) {
+    AndBang.prototype.sendDirectChat = function (teamId, userId, chatMessage, cb) {
         this._callApi('sendDirectChat', arguments);
     };
     

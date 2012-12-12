@@ -108,8 +108,7 @@
                             self.emit('staleReconnect');
                             self.disconnect();
                         } else {
-                            parsed = JSON.parse(res);
-                            parsed.forEach(function (event) {
+                            res.forEach(function (event) {
                                 self.emit(event.channel, event);
                             });
                         }
