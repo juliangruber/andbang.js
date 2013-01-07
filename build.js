@@ -12,7 +12,8 @@ var fs = require('fs'),
     andbangSpec = require('andbang-spec'),
     yetify = require('yetify'),
     uglify = require('uglify-js'),
-    colors = require('colors');
+    colors = require('colors'),
+    _ = require('underscore');
     
 var methods = andbangSpec.getMethodsByApiType('js'),
     events = andbangSpec.getAllEventTypes(),
@@ -37,13 +38,25 @@ function indent(file, indentAmount) {
 
 methods.forEach(function (method) {
     if (method.visibility !== 'public') return;
+
+    var hasOptionalParam = !!_.find(method.params, function (param) {
+        return (param.required === false) && param.type === 'object';
+    });
+
     var params = method.params.map(function (param) { return param.name; });
+
+    if (hasOptionalParam) {
+        params.push('optsOrCb');
+    }
+
     params.push('cb');
     params = params.join(', ');
     api.methods.push({
         methodName: method.name,
         params: params,
-        description: method.description
+        description: method.description,
+        numParams: method.params.length,
+        hasOptionalParam: hasOptionalParam
     });
 });
 
@@ -61,7 +74,7 @@ console.log('\n' + yetify.andBangLogo() + ':');
 fs.writeFileSync(outputPath, code, 'utf-8');
 console.log(fileName.bold + ' file built.'.grey);
 
-minified = uglify.minify(outputPath); // build out the code
+var minified = uglify.minify(outputPath); // build out the code
 
 fs.writeFileSync(minifiedPath, minified.code, 'utf-8');
 
