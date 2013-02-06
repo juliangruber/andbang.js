@@ -45,10 +45,6 @@ methods.forEach(function (method) {
 
     var params = method.params.map(function (param) { return param.name; });
 
-    if (hasOptionalParam) {
-        params.push('optsOrCb');
-    }
-
     params.push('cb');
     params = params.join(', ');
     api.methods.push({

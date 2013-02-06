@@ -335,11 +335,6 @@
         this._callApi('clearMyNotifications', arguments, 1, false);
     };
     
-    // Get team attributes. If you&#39;re a team admin this will also include some additional attributes that other team members can&#39;t see.
-    AndBang.prototype.getTeam = function (teamId, cb) {
-        this._callApi('getTeam', arguments, 1, false);
-    };
-    
     // Gets full task details for a given task.
     AndBang.prototype.getTask = function (teamId, taskId, cb) {
         this._callApi('getTask', arguments, 2, false);
@@ -425,7 +420,7 @@
         this._callApi('getTeamShippedTasks', arguments, 1, false);
     };
     
-    // Get all the tasks for a given team member.
+    // Get all current tasks for a given team member, excluding those that have been latered or shipped.
     AndBang.prototype.getMemberTasks = function (teamId, userId, cb) {
         this._callApi('getMemberTasks', arguments, 2, false);
     };
@@ -511,13 +506,13 @@
     };
     
     // Retrieve chat history.
-    AndBang.prototype.getChatHistory = function (teamId, chatHistoryOptions, optsOrCb, cb) {
+    AndBang.prototype.getChatHistory = function (teamId, chatHistoryAttributes, cb) {
         this._callApi('getChatHistory', arguments, 2, true);
     };
     
     // Retrieve direct chat history.
-    AndBang.prototype.getDirectChatHistory = function (teamId, userId, cb) {
-        this._callApi('getDirectChatHistory', arguments, 2, false);
+    AndBang.prototype.getDirectChatHistory = function (teamId, userId, chatHistoryAttributes, cb) {
+        this._callApi('getDirectChatHistory', arguments, 3, true);
     };
     
 
