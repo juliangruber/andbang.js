@@ -138,19 +138,24 @@
 
     // Handles translating multiple arguments into an array of args
     // since socket.io limits us to sending a single object as a payload.
-    AndBang.prototype._callApi = function (method, incomingArgs) {
+    AndBang.prototype._callApi = function (method, incomingArgs, numArgs, hasOptionalParam) {
         var myArray = slice.call(incomingArgs),
             last = myArray[myArray.length - 1],
             cb = isFunc(last) ? last : null,
-            args = cb ? slice.call(myArray, 0, myArray.length - 1) : myArray,
-            wrappedCallback = function (err, data, code) {
-                if (!cb) return;
-                if (typeof data === 'string') {
-                    cb(err, JSON.parse(data), code); 
-                } else {
-                    cb(err, data, code); 
-                }
-            };
+            args = cb ? slice.call(myArray, 0, myArray.length - 1) : myArray;
+
+        if (hasOptionalParam && args.length != numArgs) {
+            args.push({});
+        }
+
+        var wrappedCallback = function (err, data, code) {
+            if (!cb) return;
+            if (typeof data === 'string') {
+                cb(err, JSON.parse(data), code); 
+            } else {
+                cb(err, data, code); 
+            }
+        };
             
         if (args.length) {
             this.socket.emit(method, args, wrappedCallback);
@@ -166,7 +171,7 @@
     {{#methods}}
     // {{description}}
     AndBang.prototype.{{methodName}} = function ({{params}}) {
-        this._callApi('{{methodName}}', arguments);
+        this._callApi('{{methodName}}', arguments, {{numParams}}, {{hasOptionalParam}});
     };
     
     {{/methods}}
