@@ -415,7 +415,7 @@
         this._callApi('getTeamShippedTasks', arguments);
     };
     
-    // Get all the tasks for a given team member.
+    // Get all current tasks for a given team member, excluding those that have been latered or shipped.
     AndBang.prototype.getMemberTasks = function (teamId, userId, cb) {
         this._callApi('getMemberTasks', arguments);
     };
@@ -501,12 +501,12 @@
     };
     
     // Retrieve chat history.
-    AndBang.prototype.getChatHistory = function (teamId, cb) {
+    AndBang.prototype.getChatHistory = function (teamId, chatHistoryAttributes, cb) {
         this._callApi('getChatHistory', arguments);
     };
     
     // Retrieve direct chat history.
-    AndBang.prototype.getDirectChatHistory = function (teamId, userId, cb) {
+    AndBang.prototype.getDirectChatHistory = function (teamId, userId, chatHistoryAttributes, cb) {
         this._callApi('getDirectChatHistory', arguments);
     };
     
