@@ -189,6 +189,7 @@
                 'sortTask',
                 'newTask',
                 'interaction',
+                'updateLastRead',
                 'resetLastInteraction',
                 'removeMember',
                 'notification',
@@ -478,6 +479,11 @@
     // Get members on the team.
     AndBang.prototype.getMembers = function (teamId, cb) {
         this._callApi('getMembers', arguments, 1, false);
+    };
+    
+    // Store the last read id of chats and notifications to sync read state across clients. The format is: &#39;{&quot;notifications&quot;: #, &quot;chats&quot;: {&quot;team&quot;: #, &quot;teammemberID&quot;: #, ...}}&#39;
+    AndBang.prototype.updateLastRead = function (teamId, lastReadState, cb) {
+        this._callApi('updateLastRead', arguments, 2, false);
     };
     
     // Resets your last interaction with a given team member to zero. This is useful for removing someone from lists that are built from or sorted by your recent interactions. This has no effect on anyone but you.

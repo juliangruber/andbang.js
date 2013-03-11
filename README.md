@@ -38,6 +38,9 @@ It uses socket.io under the covers so you get realtime, seemless API access that
 
 Have fun!
 
+### Docs
+You can see all available API methods on the developer docs: https://developer.andbang.com
+
 ###andbang.template.js
 andbang.js is generated from the provided API specification, spec.json. This
 allows automation allows for rapid expansion of the API across many platforms.
