@@ -189,7 +189,8 @@
                 'sortTask',
                 'newTask',
                 'interaction',
-                'updateLastRead',
+                'setLastReadNotification',
+                'setLastReadTeamChat',
                 'resetLastInteraction',
                 'removeMember',
                 'notification',
@@ -481,9 +482,14 @@
         this._callApi('getMembers', arguments, 1, false);
     };
     
-    // Store the last read id of chats and notifications to sync read state across clients. The format is: &#39;{&quot;notifications&quot;: #, &quot;chats&quot;: {&quot;team&quot;: #, &quot;teammemberID&quot;: #, ...}}&#39;
-    AndBang.prototype.updateLastRead = function (teamId, lastReadState, cb) {
-        this._callApi('updateLastRead', arguments, 2, false);
+    // Save the ID of the last acknowledged notification, or &#39;latest&#39;
+    AndBang.prototype.setLastReadNotification = function (teamId, lastReadNotificationId, cb) {
+        this._callApi('setLastReadNotification', arguments, 2, false);
+    };
+    
+    // Save the ID of the last acknowledged team chat, or &#39;latest&#39;
+    AndBang.prototype.setLastReadTeamChat = function (teamId, lastReadChatID, cb) {
+        this._callApi('setLastReadTeamChat', arguments, 2, false);
     };
     
     // Resets your last interaction with a given team member to zero. This is useful for removing someone from lists that are built from or sorted by your recent interactions. This has no effect on anyone but you.
