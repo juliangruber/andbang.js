@@ -191,6 +191,7 @@
                 'interaction',
                 'setLastReadNotification',
                 'setLastReadTeamChat',
+                'setLastReadDirectChat',
                 'resetLastInteraction',
                 'removeMember',
                 'notification',
@@ -490,6 +491,11 @@
     // Save the ID of the last acknowledged team chat, or &#39;latest&#39;
     AndBang.prototype.setLastReadTeamChat = function (teamId, lastReadChatID, cb) {
         this._callApi('setLastReadTeamChat', arguments, 2, false);
+    };
+    
+    // Save the ID of the last acknowledged direct chat with another team member, or &#39;latest&#39;
+    AndBang.prototype.setLastReadDirectChat = function (teamId, userId, lastReadChatID, cb) {
+        this._callApi('setLastReadDirectChat', arguments, 3, false);
     };
     
     // Resets your last interaction with a given team member to zero. This is useful for removing someone from lists that are built from or sorted by your recent interactions. This has no effect on anyone but you.
