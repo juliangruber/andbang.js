@@ -192,6 +192,7 @@
                 'setLastReadNotification',
                 'setLastReadTeamChat',
                 'setLastReadDirectChat',
+                'setDirectChatState',
                 'resetLastInteraction',
                 'removeMember',
                 'notification',
@@ -398,7 +399,7 @@
         this._callApi('stopTask', arguments, 2, false);
     };
     
-    // Move a task to a new position in your list. You can do this for stuff in your current and latered lists. Without having to specify which. If you set a number higher than the lenght of the list, task will just be moved to the end of the list.
+    // Move a task to a new position (zero-based) in your list. You can do this for stuff in your current and latered lists without having to specify which list. If you set a number higher than the length of the list, the task will just be moved to the end of the list.
     AndBang.prototype.setTaskPosition = function (teamId, taskId, newPosition, cb) {
         this._callApi('setTaskPosition', arguments, 3, false);
     };
@@ -496,6 +497,11 @@
     // Save the ID of the last acknowledged direct chat with another team member, or &#39;latest&#39;
     AndBang.prototype.setLastReadDirectChat = function (teamId, userId, lastReadChatID, cb) {
         this._callApi('setLastReadDirectChat', arguments, 3, false);
+    };
+    
+    // Set the chat state for conversation (e.g composing, paused, inactive, active)
+    AndBang.prototype.setDirectChatState = function (teamId, userId, chatState, cb) {
+        this._callApi('setDirectChatState', arguments, 3, false);
     };
     
     // Resets your last interaction with a given team member to zero. This is useful for removing someone from lists that are built from or sorted by your recent interactions. This has no effect on anyone but you.
