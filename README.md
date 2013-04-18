@@ -4,7 +4,7 @@
 - All API functionality becomes a function call.
 - Couldn't be any simpler
 
-Just inclide the script in your HTML
+Just include the script in your HTML
 ```html
 <script src="andbang.js"></script>
 ```
