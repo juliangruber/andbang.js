@@ -435,8 +435,8 @@
     };
     
     // Get tasks this person has shipped.
-    AndBang.prototype.getMemberShippedTasks = function (teamId, userId, cb) {
-        this._callApi('getMemberShippedTasks', arguments, 2, false);
+    AndBang.prototype.getMemberShippedTasks = function (teamId, userId, historyAttributes, cb) {
+        this._callApi('getMemberShippedTasks', arguments, 3, true);
     };
     
     // Get the tasks this person is watching.
@@ -460,8 +460,8 @@
     };
     
     // Get tasks that I&#39;ve shipped recently.
-    AndBang.prototype.getMyShippedTasks = function (teamId, cb) {
-        this._callApi('getMyShippedTasks', arguments, 1, false);
+    AndBang.prototype.getMyShippedTasks = function (teamId, historyAttributes, cb) {
+        this._callApi('getMyShippedTasks', arguments, 2, true);
     };
     
     // Get the tasks that I&#39;m watching.
@@ -472,6 +472,11 @@
     // Get the task that I&#39;m working on.
     AndBang.prototype.getMyActiveTask = function (teamId, cb) {
         this._callApi('getMyActiveTask', arguments, 1, false);
+    };
+    
+    // Show what everyone on the team is working on
+    AndBang.prototype.getTeamActiveTasks = function (teamId, cb) {
+        this._callApi('getTeamActiveTasks', arguments, 1, false);
     };
     
     // Get a given member on the team.
@@ -530,12 +535,12 @@
     };
     
     // Retrieve chat history.
-    AndBang.prototype.getChatHistory = function (teamId, chatHistoryAttributes, cb) {
+    AndBang.prototype.getChatHistory = function (teamId, historyAttributes, cb) {
         this._callApi('getChatHistory', arguments, 2, true);
     };
     
     // Retrieve direct chat history.
-    AndBang.prototype.getDirectChatHistory = function (teamId, userId, chatHistoryAttributes, cb) {
+    AndBang.prototype.getDirectChatHistory = function (teamId, userId, historyAttributes, cb) {
         this._callApi('getDirectChatHistory', arguments, 3, true);
     };
     
