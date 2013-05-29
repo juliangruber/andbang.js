@@ -14,7 +14,7 @@
   "devDependencies": {
     "precommit-hook": "0.3.4",
     "mustache": "git+https://github.com/janl/mustache.js.git",
-    "andbang-spec": "git+ssh://git@github.com:andyet/andbang-spec.git#v2.0.22",
+    "andbang-spec": "git+ssh://git@github.com:andyet/andbang-spec.git#v2.1.0",
     "yetify": "0.0.1",
     "colors": "0.6.0-1",
     "uglify-js": "2.2.x",
