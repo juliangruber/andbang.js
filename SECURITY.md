@@ -6,7 +6,7 @@ You will receive acknowledgement of your report within **24 hours** and a more d
 
 If we have not responded promptly we ask that you give us the benefit of the doubt as it is possible the email went to spam or we have been so focused on something else we haven't seen it yet.  Please send us a quick message, *without detail* at one of the following.
 
-- Email [Adam Baldwin](mail:baldwin@andyet.net), the &yet CSO directly.
+- Email [Adam Baldwin](mailto:baldwin@andyet.net), the &yet CSO directly.
 - Message [@andyet](https://twitter.com/andyet) on twitter.
 - Give our ops team a heads up on IRC in #andyet on freenode.
 
