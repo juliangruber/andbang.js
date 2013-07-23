@@ -28,7 +28,7 @@ api.on('ready', function () {
 
     // for example, we can just fetch our teams
     // and pass it a callback.
-    api.getTeams(function (err, myTeams) {
+    api.getMyTeams(function (err, myTeams) {
         window.teams = myTeams;
     });
 });
