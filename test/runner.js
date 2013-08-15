@@ -8,7 +8,7 @@ global.require = require;
 global.exports = exports;
 global.module = module;
 global.request = function (options, cb) {
-    cb(null, options, 200);
+    cb(null, {statusCode: 200}, options);
 };
 
 var context = vm.createContext(global);

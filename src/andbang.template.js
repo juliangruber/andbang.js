@@ -15,6 +15,11 @@
                 str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
             }
             return str.join("&");
+        },
+        isJSON = function (text) {
+            return (/^[\],:{}\s]*$/.test(text.replace(/\\["\\\/bfnrtu]/g, '@')
+                .replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']')
+                .replace(/(?:^|:|,)(?:\s*\[)+/g, '')));
         };
 
     // Conditionally import socket.io-client or just use global if present
@@ -213,7 +218,11 @@
 
         var wrappedCallback = function (err, response, body) {
             if (!cb) return;
-            cb(err, JSON.parse(body), response.statusCode);
+            if (typeof body === 'string' && isJSON(body)) {
+                cb(err, JSON.parse(body), response.statusCode); 
+            } else {
+                cb(err, body, response.statusCode); 
+            }
         };
 
         for (var i = 0, m = pathParams.length; i < m; i++) {
@@ -227,13 +236,15 @@
             headers: {
                 'Authorization': 'Bearer ' + this.token
             },
-            url: this.url + path
+            url: this.url + path,
+            strictSSL: true
         };
 
         if (httpMethod === 'GET') {
             requestOptions.qs = serialize(bodyData);
         } else {
-            requestOptions.body = serialize(bodyData);
+            requestOptions.body = bodyData;
+            requestOptions.json = true;
         }
         
         if (root.request) {

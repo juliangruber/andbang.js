@@ -4,7 +4,7 @@ var API = this.module.exports,
     qs = require('querystring'),
     token = 'wooo',
     tokenHeader = 'Authorization',
-    s = function (err, obj, code) {
+    s = function (obj) {
         return JSON.stringify(obj, null, 2);
     },
     getHeaders = function () {
@@ -19,17 +19,19 @@ var api = new API({
 });
 
 var expected = function (method, path, data) {
-    data = qs.stringify(data || {});
+    data = data || {};
     var obj = {
         method: method,
         headers: getHeaders(),
         url: api.http.url + path,
-        body: data
+        strictSSL: true
     };
 
     if (method === 'GET') {
-        delete obj.body;
-        obj.qs = data;
+        obj.qs = qs.stringify(data);
+    } else {
+        obj.body = data;
+        obj.json = true;
     }
 
     return s(obj);
@@ -109,6 +111,21 @@ describe('Clear notifications', function () {
     it('should have the correct request for a DELETE', function (done) {
         api.http.clearMyNotifications(1, function (err, res) {
             assert.equal(expected('DELETE', '/teams/1/me/notifications'), s(res));
+            done();
+        });
+    });
+
+});
+
+
+describe('Create task', function () {
+
+    it('should have the correct request for a POST', function (done) {
+        var request = {
+            title: 'test'
+        };
+        api.http.createTaskForMe(1, request, function (err, res) {
+            assert.equal(expected('POST', '/teams/1/me/tasks', request), s(res));
             done();
         });
     });
