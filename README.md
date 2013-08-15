@@ -38,6 +38,24 @@ It uses socket.io under the covers so you get realtime, seemless API access that
 
 Have fun!
 
+#### REST API
+
+AndBang also exposes a RESTful API that you can access like this:
+
+```js
+// init an API instance with your token
+var api = new AndBang({
+    useREST: true,
+    token: 'your access token'
+});
+
+// now you can make calls like
+api.http.getMe(function (err, response, code) {
+    if (err) throw err;
+    console.log(response, code);
+});
+```
+
 ### Docs
 You can see all available API methods on the developer docs: https://developer.andbang.com
 

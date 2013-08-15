@@ -8,10 +8,20 @@
         },
         extend = function (obj1, obj2) {
             for (var i in obj2) obj1[i] = obj2[i];
+        },
+        serialize = function (obj) {
+            var str = [];
+            for (var p in obj) {
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+            }
+            return str.join("&");
         };
 
     // Conditionally import socket.io-client or just use global if present
     root.io || (root.io = require('socket.io-client'));
+
+    // Conditionally import request or just use global if present
+    root.request || (root.request = require('request'));
 
 {{{emitter}}}
 
@@ -23,7 +33,8 @@
                 transports: ['websocket', 'flashsocket', 'htmlfile', 'xhr-multipart', 'xhr-polling', 'jsonp-polling'],
                 reconnectAttempts: 20,
                 autoConnect: true,
-                autoSubscribe: true
+                autoSubscribe: true,
+                useREST: false
             };
 
         // use our config settings
@@ -33,11 +44,19 @@
         WildEmitter.call(this);
 
         // if tokens are passed in, connect right away
-        if (opts.token && opts.autoConnect) this.validateToken(opts.token);
+        if (opts.token && opts.autoConnect && !opts.useREST) this.validateToken(opts.token);
+
+        // if we are using the REST API, store the token
+        if (opts.useREST) this.saveRestToken(opts.url, opts.token);
     };
 
     // inherit from emitter
     AndBang.prototype = new WildEmitter();
+
+    AndBang.prototype.saveRestToken = function (url, token) {
+        this.http.url = url;
+        this.http.token = token;
+    };
 
     // validate a token
     AndBang.prototype.validateToken = function (token, optionalCallback) {
@@ -175,6 +194,60 @@
     };
     
     {{/methods}}
+
+    AndBang.prototype.http = function () {};
+
+    // Handles translating multiple arguments into a http request call
+    AndBang.prototype.http._callApi = function (path, httpMethod, incomingArgs) {
+        var myArray = slice.call(incomingArgs),
+            last = myArray[myArray.length - 1],
+            cb = isFunc(last) ? last : null,
+            args = cb ? slice.call(myArray, 0, myArray.length - 1) : myArray,
+            bodyData = {},
+            pathParams = path.match(/\{\{[\w_]*\}\}/g) || [],
+            requestOptions;
+
+        if (pathParams.length < args.length) {
+            bodyData = args[args.length - 1];
+        }
+
+        var wrappedCallback = function (err, response, body) {
+            if (!cb) return;
+            cb(err, JSON.parse(body), response.statusCode);
+        };
+
+        for (var i = 0, m = pathParams.length; i < m; i++) {
+            path = path.replace(pathParams[i], args[i]);
+        }
+
+        httpMethod = httpMethod.toUpperCase();
+
+        requestOptions = {
+            method: httpMethod,
+            headers: {
+                'Authorization': 'Bearer ' + this.token
+            },
+            url: this.url + path
+        };
+
+        if (httpMethod === 'GET') {
+            requestOptions.qs = serialize(bodyData);
+        } else {
+            requestOptions.body = serialize(bodyData);
+        }
+        
+        if (root.request) {
+            root.request(requestOptions, wrappedCallback);
+        }
+    };
+
+    {{#httpMethods}}
+    // {{description}}
+    AndBang.prototype.http.{{methodName}} = function ({{params}}) {
+        this._callApi('{{{path}}}', '{{method}}', arguments);
+    };
+    
+    {{/httpMethods}}
 
     // attach to windor or export with commonJS
     if (typeof exports !== 'undefined') {

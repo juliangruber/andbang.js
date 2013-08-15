@@ -21,6 +21,7 @@ var methods = andbangSpec.getMethodsByApiType('js'),
     emitter = fs.readFileSync(__dirname + '/node_modules/wildemitter/wildemitter-bare.js', 'utf-8').toString(),
     api = {
         methods: [],
+        httpMethods: [],
         emitter: indent(emitter)
     };
 
@@ -39,6 +40,8 @@ function indent(file, indentAmount) {
 methods.forEach(function (method) {
     if (method.visibility !== 'public') return;
 
+    var isRest = _.contains(_.pluck(method.apis, 'type'), 'rest');
+
     var hasOptionalParam = !!_.find(method.params, function (param) {
         return (param.required === false) && param.type === 'object';
     });
@@ -54,6 +57,17 @@ methods.forEach(function (method) {
         numParams: method.params.length,
         hasOptionalParam: hasOptionalParam
     });
+
+    if (isRest) {
+        var restApi = _.find(method.apis, function (api) { return api.type === 'rest'; });
+        api.httpMethods.push({
+            methodName: method.name,
+            method: restApi.method,
+            path: restApi.path,
+            params: params,
+            description: method.description
+        });
+    }
 });
 
 // add quotes around all event names

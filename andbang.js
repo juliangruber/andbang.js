@@ -8,10 +8,20 @@
         },
         extend = function (obj1, obj2) {
             for (var i in obj2) obj1[i] = obj2[i];
+        },
+        serialize = function (obj) {
+            var str = [];
+            for (var p in obj) {
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+            }
+            return str.join("&");
         };
 
     // Conditionally import socket.io-client or just use global if present
     root.io || (root.io = require('socket.io-client'));
+
+    // Conditionally import request or just use global if present
+    root.request || (root.request = require('request'));
 
     function WildEmitter() {
         this.callbacks = {};
@@ -125,7 +135,8 @@
                 transports: ['websocket', 'flashsocket', 'htmlfile', 'xhr-multipart', 'xhr-polling', 'jsonp-polling'],
                 reconnectAttempts: 20,
                 autoConnect: true,
-                autoSubscribe: true
+                autoSubscribe: true,
+                useREST: false
             };
 
         // use our config settings
@@ -135,11 +146,19 @@
         WildEmitter.call(this);
 
         // if tokens are passed in, connect right away
-        if (opts.token && opts.autoConnect) this.validateToken(opts.token);
+        if (opts.token && opts.autoConnect && !opts.useREST) this.validateToken(opts.token);
+
+        // if we are using the REST API, store the token
+        if (opts.useREST) this.saveRestToken(opts.url, opts.token);
     };
 
     // inherit from emitter
     AndBang.prototype = new WildEmitter();
+
+    AndBang.prototype.saveRestToken = function (url, token) {
+        this.http.url = url;
+        this.http.token = token;
+    };
 
     // validate a token
     AndBang.prototype.validateToken = function (token, optionalCallback) {
@@ -542,6 +561,288 @@
     // Retrieve direct chat history.
     AndBang.prototype.getDirectChatHistory = function (teamId, userId, historyAttributes, cb) {
         this._callApi('getDirectChatHistory', arguments, 3, true);
+    };
+    
+
+    AndBang.prototype.http = function () {};
+
+    // Handles translating multiple arguments into a http request call
+    AndBang.prototype.http._callApi = function (path, httpMethod, incomingArgs) {
+        var myArray = slice.call(incomingArgs),
+            last = myArray[myArray.length - 1],
+            cb = isFunc(last) ? last : null,
+            args = cb ? slice.call(myArray, 0, myArray.length - 1) : myArray,
+            bodyData = {},
+            pathParams = path.match(/\{\{[\w_]*\}\}/g) || [],
+            requestOptions;
+
+        if (pathParams.length < args.length) {
+            bodyData = args[args.length - 1];
+        }
+
+        var wrappedCallback = function (err, response, body) {
+            if (!cb) return;
+            cb(err, JSON.parse(body), response.statusCode);
+        };
+
+        for (var i = 0, m = pathParams.length; i < m; i++) {
+            path = path.replace(pathParams[i], args[i]);
+        }
+
+        httpMethod = httpMethod.toUpperCase();
+
+        requestOptions = {
+            method: httpMethod,
+            headers: {
+                'Authorization': 'Bearer ' + this.token
+            },
+            url: this.url + path
+        };
+
+        if (httpMethod === 'GET') {
+            requestOptions.qs = serialize(bodyData);
+        } else {
+            requestOptions.body = serialize(bodyData);
+        }
+        
+        if (root.request) {
+            root.request(requestOptions, wrappedCallback);
+        }
+    };
+
+    // Get the user properties of the logged in user.
+    AndBang.prototype.http.getMe = function (cb) {
+        this._callApi('/me', 'GET', arguments);
+    };
+    
+    // Update the user properties of the logged in user.
+    AndBang.prototype.http.updateMe = function (userAttributes, cb) {
+        this._callApi('/me', 'PUT', arguments);
+    };
+    
+    // Get team attributes of teams that you&#39;re part of.
+    AndBang.prototype.http.getMyTeams = function (cb) {
+        this._callApi('/me/teams', 'GET', arguments);
+    };
+    
+    // Get team attributes and related data for all teams you&#39;re part of.
+    AndBang.prototype.http.getAllMyTeamData = function (cb) {
+        this._callApi('/me/teamdata', 'GET', arguments);
+    };
+    
+    // Get notifications for my user in a given team. The newest ones are always returned first. Only the last 50 are kept in the database. So there&#39;s no need to limit requests.
+    AndBang.prototype.http.getMyNotifications = function (teamId, cb) {
+        this._callApi('/teams/{{teamId}}/me/notifications', 'GET', arguments);
+    };
+    
+    // Clear all notifications for my user in a given team.
+    AndBang.prototype.http.clearMyNotifications = function (teamId, cb) {
+        this._callApi('/teams/{{teamId}}/me/notifications', 'DELETE', arguments);
+    };
+    
+    // Gets full task details for a given task.
+    AndBang.prototype.http.getTask = function (teamId, taskId, cb) {
+        this._callApi('/teams/{{teamId}}/tasks/{{taskId}}', 'GET', arguments);
+    };
+    
+    // Updates task attributes.
+    AndBang.prototype.http.updateTask = function (teamId, taskId, taskAttributes, cb) {
+        this._callApi('/teams/{{teamId}}/tasks/{{taskId}}', 'PUT', arguments);
+    };
+    
+    // Assigns a task to another team member.
+    AndBang.prototype.http.assignTask = function (teamId, taskId, userId, cb) {
+        this._callApi('/teams/{{teamId}}/tasks/{{taskId}}/assignto/{{userId}}', 'POST', arguments);
+    };
+    
+    // Deletes a task completely.
+    AndBang.prototype.http.deleteTask = function (teamId, taskId, cb) {
+        this._callApi('/teams/{{teamId}}/tasks/{{taskId}}', 'DELETE', arguments);
+    };
+    
+    // In And Bang we call completing a task &quot;shipping&quot;. This method does that.
+    AndBang.prototype.http.shipTask = function (teamId, taskId, cb) {
+        this._callApi('/teams/{{teamId}}/tasks/{{taskId}}/ship', 'POST', arguments);
+    };
+    
+    // If you shipped a task, but it wasn&#39;t actually done, this undoes that
+    AndBang.prototype.http.unshipTask = function (teamId, taskId, cb) {
+        this._callApi('/teams/{{teamId}}/tasks/{{taskId}}/unship', 'POST', arguments);
+    };
+    
+    // Start watching a task.
+    AndBang.prototype.http.watchTask = function (teamId, taskId, cb) {
+        this._callApi('/teams/{{teamId}}/tasks/{{taskId}}/watch', 'POST', arguments);
+    };
+    
+    // Stop watching a task.
+    AndBang.prototype.http.unwatchTask = function (teamId, taskId, cb) {
+        this._callApi('/teams/{{teamId}}/tasks/{{taskId}}/unwatch', 'POST', arguments);
+    };
+    
+    // You&#39;re not going to do this task now.
+    AndBang.prototype.http.laterTask = function (teamId, taskId, cb) {
+        this._callApi('/teams/{{teamId}}/tasks/{{taskId}}/later', 'POST', arguments);
+    };
+    
+    // Moves the latered item back into your current list.
+    AndBang.prototype.http.unlaterTask = function (teamId, taskId, cb) {
+        this._callApi('/teams/{{teamId}}/tasks/{{taskId}}/now', 'POST', arguments);
+    };
+    
+    // Start working on a task. This will also stop working on other tasks you may have active.
+    AndBang.prototype.http.startTask = function (teamId, taskId, cb) {
+        this._callApi('/teams/{{teamId}}/tasks/{{taskId}}/start', 'POST', arguments);
+    };
+    
+    // Stop working on a task.
+    AndBang.prototype.http.stopTask = function (teamId, taskId, cb) {
+        this._callApi('/teams/{{teamId}}/tasks/{{taskId}}/stop', 'POST', arguments);
+    };
+    
+    // Move a task to a new position (zero-based) in your list. You can do this for stuff in your current and latered lists without having to specify which list. If you set a number higher than the length of the list, the task will just be moved to the end of the list.
+    AndBang.prototype.http.setTaskPosition = function (teamId, taskId, newPosition, cb) {
+        this._callApi('/teams/{{teamId}}/tasks/{{taskId}}/setposition', 'POST', arguments);
+    };
+    
+    // Create a new task and add it to my list.
+    AndBang.prototype.http.createTaskForMe = function (teamId, taskAttributes, cb) {
+        this._callApi('/teams/{{teamId}}/me/tasks', 'POST', arguments);
+    };
+    
+    // Create a new task and add it to your teammates&#39;s list
+    AndBang.prototype.http.createTaskForTeammate = function (teamId, userId, taskAttributes, cb) {
+        this._callApi('/teams/{{teamId}}/members/{{userId}}/tasks', 'POST', arguments);
+    };
+    
+    // Gets all current and latered tasks for team in the order they were created.
+    AndBang.prototype.http.getAllTasks = function (teamId, cb) {
+        this._callApi('/teams/{{teamId}}/tasks', 'GET', arguments);
+    };
+    
+    // Get tasks the team has shipped. Shows 100 most recent to start.
+    AndBang.prototype.http.getTeamShippedTasks = function (teamId, cb) {
+        this._callApi('/teams/{{teamId}}/tasks/shipped', 'GET', arguments);
+    };
+    
+    // Get all current tasks for a given team member, excluding those that have been latered or shipped.
+    AndBang.prototype.http.getMemberTasks = function (teamId, userId, cb) {
+        this._callApi('/teams/{{teamId}}/members/{{userId}}/tasks', 'GET', arguments);
+    };
+    
+    // Get all the tasks that have been deferred by (or for) this person on this team.
+    AndBang.prototype.http.getMemberLateredTasks = function (teamId, userId, cb) {
+        this._callApi('/teams/{{teamId}}/members/{{userId}}/latered', 'GET', arguments);
+    };
+    
+    // Get tasks this person has shipped.
+    AndBang.prototype.http.getMemberShippedTasks = function (teamId, userId, historyAttributes, cb) {
+        this._callApi('/teams/{{teamId}}/members/{{userId}}/shipped', 'GET', arguments);
+    };
+    
+    // Get the tasks this person is watching.
+    AndBang.prototype.http.getMemberWatchedTasks = function (teamId, userId, cb) {
+        this._callApi('/teams/{{teamId}}/members/{{userId}}/watched', 'GET', arguments);
+    };
+    
+    // Get the task this person is working on.
+    AndBang.prototype.http.getMemberActiveTask = function (teamId, userId, cb) {
+        this._callApi('/teams/{{teamId}}/members/{{userId}}/active', 'GET', arguments);
+    };
+    
+    // Get my current tasks.
+    AndBang.prototype.http.getMyTasks = function (teamId, cb) {
+        this._callApi('/teams/{{teamId}}/me/tasks', 'GET', arguments);
+    };
+    
+    // Get all tasks I&#39;ve latered on this team.
+    AndBang.prototype.http.getMyLateredTasks = function (teamId, cb) {
+        this._callApi('/teams/{{teamId}}/me/latered', 'GET', arguments);
+    };
+    
+    // Get tasks that I&#39;ve shipped recently.
+    AndBang.prototype.http.getMyShippedTasks = function (teamId, historyAttributes, cb) {
+        this._callApi('/teams/{{teamId}}/me/shipped', 'GET', arguments);
+    };
+    
+    // Get the tasks that I&#39;m watching.
+    AndBang.prototype.http.getMyWatchedTasks = function (teamId, cb) {
+        this._callApi('/teams/{{teamId}}/me/watched', 'GET', arguments);
+    };
+    
+    // Get the task that I&#39;m working on.
+    AndBang.prototype.http.getMyActiveTask = function (teamId, cb) {
+        this._callApi('/teams/{{teamId}}/me/active', 'GET', arguments);
+    };
+    
+    // Show what everyone on the team is working on
+    AndBang.prototype.http.getTeamActiveTasks = function (teamId, cb) {
+        this._callApi('/teams/{{teamId}}/active', 'GET', arguments);
+    };
+    
+    // Get a given member on the team.
+    AndBang.prototype.http.getMember = function (teamId, userId, cb) {
+        this._callApi('/teams/{{teamID}}/members/{{userId}}', 'GET', arguments);
+    };
+    
+    // Get members on the team.
+    AndBang.prototype.http.getMembers = function (teamId, cb) {
+        this._callApi('/teams/{{teamId}}/members', 'GET', arguments);
+    };
+    
+    // Save the ID of the last acknowledged notification, or &#39;latest&#39;
+    AndBang.prototype.http.setLastReadNotification = function (teamId, lastReadNotificationId, cb) {
+        this._callApi('/teams/{{teamId}}/me/notifications/last-read', 'POST', arguments);
+    };
+    
+    // Save the ID of the last acknowledged team chat, or &#39;latest&#39;
+    AndBang.prototype.http.setLastReadTeamChat = function (teamId, lastReadChatID, cb) {
+        this._callApi('/teams/{{teamId}}/chats/last-read', 'POST', arguments);
+    };
+    
+    // Save the ID of the last acknowledged direct chat with another team member, or &#39;latest&#39;
+    AndBang.prototype.http.setLastReadDirectChat = function (teamId, userId, lastReadChatID, cb) {
+        this._callApi('/teams/{{teamId}}/chats/{{userId}}/last-read', 'POST', arguments);
+    };
+    
+    // Set the chat state for conversation (e.g composing, paused, inactive, active)
+    AndBang.prototype.http.setDirectChatState = function (teamId, userId, chatState, cb) {
+        this._callApi('/teams/{{teamId}}/chats/{{userId}}/state', 'POST', arguments);
+    };
+    
+    // Resets your last interaction with a given team member to zero. This is useful for removing someone from lists that are built from or sorted by your recent interactions. This has no effect on anyone but you.
+    AndBang.prototype.http.resetLastInteraction = function (teamId, userId, cb) {
+        this._callApi('/teams/{{teamId}}/members/{{userId}}/reset-last-interaction', 'POST', arguments);
+    };
+    
+    // Get details about a single invitation
+    AndBang.prototype.http.getInvite = function (teamId, inviteId, cb) {
+        this._callApi('/teams/{{teamId}}/invites/{{inviteId}}', 'GET', arguments);
+    };
+    
+    // Get array of everybody who has been invited to the team
+    AndBang.prototype.http.getInvites = function (teamId, cb) {
+        this._callApi('/teams/{{teamId}}/invites', 'GET', arguments);
+    };
+    
+    // Send a chat message.
+    AndBang.prototype.http.sendChat = function (teamId, chatMessage, cb) {
+        this._callApi('/teams/{{teamId}}/chat', 'POST', arguments);
+    };
+    
+    // Send a direct chat message.
+    AndBang.prototype.http.sendDirectChat = function (teamId, userId, chatMessage, cb) {
+        this._callApi('/teams/{{teamId}}/chat/{{userId}}', 'POST', arguments);
+    };
+    
+    // Retrieve chat history.
+    AndBang.prototype.http.getChatHistory = function (teamId, historyAttributes, cb) {
+        this._callApi('/teams/{{teamId}}/chat', 'GET', arguments);
+    };
+    
+    // Retrieve direct chat history.
+    AndBang.prototype.http.getDirectChatHistory = function (teamId, userId, historyAttributes, cb) {
+        this._callApi('/teams/{{teamId}}/chat/{{userId}}', 'GET', arguments);
     };
     
 

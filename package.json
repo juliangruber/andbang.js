@@ -9,7 +9,11 @@
   },
   "main": "./andbang.js",
   "dependencies": {
-    "socket.io-client": "0.9.11"
+    "socket.io-client": "0.9.11",
+    "request": "2.26.0"
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/mocha -c -u bdd -R spec --timeout 10000 test/runner.js"
   },
   "devDependencies": {
     "precommit-hook": "0.3.4",
@@ -19,6 +23,8 @@
     "colors": "0.6.0-1",
     "uglify-js": "2.2.x",
     "wildemitter": "0.0.3",
-    "underscore": "1.4.4"
+    "underscore": "1.4.4",
+    "mocha": "~1.12.0",
+    "assert": "~0.4.9"
   }
 }
