@@ -43,7 +43,7 @@ You can see all available API methods on the developer docs: https://developer.a
 
 ###andbang.template.js
 andbang.js is generated from the provided API specification, spec.json. This
-allows automation allows for rapid expansion of the API across many platforms.
+automation allows for rapid expansion of the API across many platforms.
 
 To generate andbang.js, run the provided build script, which depends on spec.json
 and andbang.template.js.
