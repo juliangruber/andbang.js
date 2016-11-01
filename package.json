@@ -9,16 +9,16 @@
   },
   "main": "./andbang.js",
   "dependencies": {
-    "socket.io-client": "0.9.11"
+    "socket.io-client": "1.5.1"
   },
   "devDependencies": {
-    "precommit-hook": "0.3.4",
+    "precommit-hook": "3.0.0",
     "mustache": "git+https://github.com/janl/mustache.js.git",
     "andbang-spec": "git+ssh://git@github.com:andyet/andbang-spec.git#v2.1.0",
-    "yetify": "0.0.1",
-    "colors": "0.6.0-1",
-    "uglify-js": "2.2.x",
-    "wildemitter": "0.0.3",
-    "underscore": "1.4.4"
+    "yetify": "0.1.0",
+    "colors": "1.1.2",
+    "uglify-js": "~2.7.4",
+    "wildemitter": "1.2.0",
+    "underscore": "1.8.3"
   }
 }
